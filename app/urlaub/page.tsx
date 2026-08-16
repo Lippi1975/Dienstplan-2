@@ -1,0 +1,1 @@
+export default function Urlaub(){return <main className="container"><div className="card"><h1>Urlaub</h1><p>Urlaubsverwaltung folgt im nächsten Schritt.</p></div></main>}

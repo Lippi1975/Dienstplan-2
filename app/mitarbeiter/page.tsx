@@ -1,0 +1,1 @@
+export default function Mitarbeiter(){return <main className="container"><div className="card"><h1>Mitarbeiter</h1><p>Mitarbeiterverwaltung folgt im nächsten Schritt.</p></div></main>}
