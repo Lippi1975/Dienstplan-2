@@ -105,7 +105,20 @@ async function loadVacations() {
     }
   }
 
-  async function add() {
+async function add() {
+
+  const vacation = employeeHasVacation(
+    employee,
+    date
+  );
+
+  if (vacation) {
+    setMsg(
+      `❌ Mitarbeiter hat Urlaub von ${vacation.date_from} bis ${vacation.date_to}`
+    );
+    return;
+  }
+  
     const startTime =
       shiftType === "Früh" ? "08:00" : "14:30";
 
@@ -171,9 +184,21 @@ function formatDate(dateString: string) {
     year: "numeric",
   });
 }
- function getVacation(day: string) {
+function getVacation(day: string) {
   return vacations.find(
     (v) =>
+      day >= v.date_from &&
+      day <= v.date_to
+  );
+}
+
+function employeeHasVacation(
+  employeeId: number,
+  day: string
+) {
+  return vacations.find(
+    (v) =>
+      v.employee_id === employeeId &&
       day >= v.date_from &&
       day <= v.date_to
   );
