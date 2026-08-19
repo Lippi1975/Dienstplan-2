@@ -1,10 +1,13 @@
-# Dienstplan-App
-Next.js + Supabase + Vercel.
+# Dienstplan 2 – Version 2
 
-## Start
-1. `npm install`
-2. `.env.example` nach `.env.local` kopieren.
-3. Supabase URL und Publishable Key eintragen.
-4. `npm run dev`
+Next.js + Supabase.
 
-Die Datenbank wird mit dem SQL aus dem Chat eingerichtet. `.env.local` niemals zu GitHub hochladen.
+Enthalten:
+- Wochenansicht
+- 2 Filialen
+- Vormittag 08:00–12:30
+- Nachmittag 14:30–18:00
+- Schichten anlegen, bearbeiten und löschen
+- Speicherung in Supabase
+
+Nach dem Hochladen nach GitHub startet Vercel automatisch ein neues Deployment.
