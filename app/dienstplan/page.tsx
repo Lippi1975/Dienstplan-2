@@ -19,7 +19,7 @@ export default function Plan() {
   const [shifts, setShifts] = useState<any[]>([]);
   const [vacations, setVacations] = useState<any[]>([]);
 const [weekOffset, setWeekOffset] = useState(0);
-
+const [jumpDate, setJumpDate] = useState("");
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
   const [shiftType, setShiftType] = useState("Früh");
@@ -217,6 +217,43 @@ function getShift(
   );
 }
 function getCalendarWeek(date: Date) {
+
+  function jumpToWeek() {
+  if (!jumpDate) return;
+
+  const target = new Date(jumpDate);
+  const today = new Date();
+
+  const targetMonday = new Date(target);
+  const targetDay =
+    targetMonday.getDay() === 0
+      ? 7
+      : targetMonday.getDay();
+
+  targetMonday.setDate(
+    targetMonday.getDate() - targetDay + 1
+  );
+
+  const currentMonday = new Date(today);
+  const currentDay =
+    currentMonday.getDay() === 0
+      ? 7
+      : currentMonday.getDay();
+
+  currentMonday.setDate(
+    currentMonday.getDate() - currentDay + 1
+  );
+
+  const diffWeeks = Math.round(
+    (targetMonday.getTime() -
+      currentMonday.getTime()) /
+      (7 * 24 * 60 * 60 * 1000)
+  );
+
+  setWeekOffset(diffWeeks);
+}
+
+
   const target = new Date(date);
 
   const dayNr =
@@ -440,6 +477,19 @@ for (let i = 0; i < 7; i++) {
   >
     Nächste Woche →
   </button>
+  <input
+  type="date"
+  value={jumpDate}
+  onChange={(e) =>
+    setJumpDate(e.target.value)
+  }
+/>
+
+<button
+  onClick={jumpToWeek}
+>
+  Gehe zu Datum
+</button>
 </div>
   <h2>Wochenansicht</h2>
 
