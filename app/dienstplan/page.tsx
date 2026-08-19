@@ -18,7 +18,7 @@ export default function Plan() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [shifts, setShifts] = useState<any[]>([]);
   const [vacations, setVacations] = useState<any[]>([]);
-
+const [weekOffset, setWeekOffset] = useState(0);
 
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
@@ -229,7 +229,7 @@ const dayOfWeek =
 const monday = new Date(today);
 
 monday.setDate(
-  today.getDate() - dayOfWeek + 1
+  today.getDate() - dayOfWeek + 1 + (weekOffset * 7)
 );
 
 for (let i = 0; i < 7; i++) {
@@ -241,6 +241,7 @@ for (let i = 0; i < 7; i++) {
     d.toISOString().split("T")[0]
   );
 }
+  
   console.log("Vacations:", vacations);
   return (
     <main className="container">
@@ -378,6 +379,33 @@ for (let i = 0; i < 7; i++) {
         ))}
       </div>
       <div className="card">
+        <div className="toolbar">
+  <button
+    onClick={() =>
+      setWeekOffset(
+        weekOffset - 1
+      )
+    }
+  >
+    ← Vorherige Woche
+  </button>
+
+  <strong>
+    KW {weekOffset === 0
+      ? "Aktuell"
+      : weekOffset}
+  </strong>
+
+  <button
+    onClick={() =>
+      setWeekOffset(
+        weekOffset + 1
+      )
+    }
+  >
+    Nächste Woche →
+  </button>
+</div>
   <h2>Wochenansicht</h2>
 
   <div className="week">
