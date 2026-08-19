@@ -217,9 +217,19 @@ function getShift(
   );
 }
   
-const days = [...new Set(shifts.map((s) => s.shift_date))]
-  .sort()
-  .slice(-7);
+const days = [];
+
+const today = new Date();
+
+for (let i = 0; i < 7; i++) {
+  const d = new Date(today);
+
+  d.setDate(today.getDate() + i);
+
+  days.push(
+    d.toISOString().split("T")[0]
+  );
+}
   console.log("Vacations:", vacations);
   return (
     <main className="container">
