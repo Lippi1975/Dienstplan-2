@@ -190,7 +190,8 @@ function getShift(
       s.branches?.name === branchName &&
       s.shift_type === shiftType
   );
-
+}
+  
 const days = [...new Set(shifts.map((s) => s.shift_date))]
   .sort()
   .slice(-7);
