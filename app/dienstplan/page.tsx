@@ -217,14 +217,25 @@ function getShift(
   );
 }
   
-const days = [];
+const days: string[] = [];
 
 const today = new Date();
 
-for (let i = 0; i < 7; i++) {
-  const d = new Date(today);
+const dayOfWeek =
+  today.getDay() === 0
+    ? 7
+    : today.getDay();
 
-  d.setDate(today.getDate() + i);
+const monday = new Date(today);
+
+monday.setDate(
+  today.getDate() - dayOfWeek + 1
+);
+
+for (let i = 0; i < 7; i++) {
+  const d = new Date(monday);
+
+  d.setDate(monday.getDate() + i);
 
   days.push(
     d.toISOString().split("T")[0]
