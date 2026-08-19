@@ -97,7 +97,6 @@ async function loadVacations() {
     setVacations(data);
   }
 }
-``
   
   async function loadShifts() {
     const { data } = await createClient()
@@ -160,7 +159,7 @@ async function loadVacations() {
       .eq("id", id);
 
     await loadShifts();
-    //await loadVacations();
+    await loadVacations();
   }
 
   async function updateEmployee(
