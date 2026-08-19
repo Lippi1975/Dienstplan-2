@@ -185,4 +185,90 @@ export default function Plan() {
               >
                 {x.name}
               </option>
-         
+            ))}
+          </select>
+
+          <select
+            value={shiftType}
+            onChange={(e) =>
+              setShiftType(e.target.value)
+            }
+          >
+            <option value="Früh">
+              Vormittag
+            </option>
+            <option value="Spät">
+              Nachmittag
+            </option>
+          </select>
+
+          <input
+            type="date"
+            value={date}
+            onChange={(e) =>
+              setDate(e.target.value)
+            }
+          />
+
+          <button
+            className="primary"
+            onClick={add}
+          >
+            Schicht speichern
+          </button>
+        </div>
+
+        <p>{msg}</p>
+      </div>
+
+      <div className="card">
+        <h2>Gespeicherte Schichten</h2>
+
+        {shifts.map((s) => (
+          <div
+            key={s.id}
+            className="card"
+          >
+            <div>
+              <strong>
+                {s.shift_date}
+              </strong>
+            </div>
+
+            <div>
+              Filiale:
+              {" "}
+              {s.branches?.name}
+            </div>
+
+            <div>
+              Schicht:
+              {" "}
+              {s.shift_type}
+            </div>
+
+            <div
+              style={{
+                marginTop: 10,
+              }}
+            >
+              Mitarbeiter:
+            </div>
+
+            <select
+              value={s.employee_id}
+              onChange={(e) =>
+                updateEmployee(
+                  s.id,
+                  Number(
+                    e.target.value
+                  )
+                )
+              }
+            >
+              {employees.map((emp) => (
+                <option
+                  key={emp.id}
+                  value={emp.id}
+                >
+                 
