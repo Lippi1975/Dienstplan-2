@@ -192,13 +192,7 @@ function formatDate(dateString: string) {
       day <= v.date_to
   );
 }
- function getVacation(day: string) {
-  return vacations.find(
-    (v) =>
-      day >= v.date_from &&
-      day <= v.date_to
-  );
-} 
+
 function getShift(
   date: string,
   branchName: string,
