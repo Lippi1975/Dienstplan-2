@@ -234,6 +234,13 @@ function getCalendarWeek(date: Date) {
     4
   );
 
+  const diffWeeks = Math.round(
+    (targetMonday.getTime() -
+      currentMonday.getTime()) /
+      (7 * 24 * 60 * 60 * 1000)
+  );
+
+  
   function jumpToWeek() {
   if (!jumpDate) return;
 
@@ -259,13 +266,7 @@ function getCalendarWeek(date: Date) {
   currentMonday.setDate(
     currentMonday.getDate() - currentDay + 1
   );
-
-  const diffWeeks = Math.round(
-    (targetMonday.getTime() -
-      currentMonday.getTime()) /
-      (7 * 24 * 60 * 60 * 1000)
-  );
-
+    
   setWeekOffset(diffWeeks);
 }
   
