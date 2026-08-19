@@ -19,6 +19,7 @@ export default function Plan() {
 
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
+  const [shiftType, setShiftType] = useState("Früh");
 
   const [date, setDate] = useState(
     new Date().toISOString().slice(0, 10)
@@ -30,30 +31,30 @@ export default function Plan() {
     const s = createClient();
 
     (async () => {
-      const x = await s
+      const branches = await s
         .from("branches")
         .select("id,name")
         .order("id");
 
-      const y = await s
+      const employees = await s
         .from("employees")
         .select("id,name")
         .eq("active", true)
         .order("name");
 
-      if (x.data) {
-        setB(x.data);
+      if (branches.data) {
+        setB(branches.data);
 
-        if (x.data[0]) {
-          setBranch(x.data[0].id);
+        if (branches.data[0]) {
+          setBranch(branches.data[0].id);
         }
       }
 
-      if (y.data) {
-        setE(y.data);
+      if (employees.data) {
+        setE(employees.data);
 
-        if (y.data[0]) {
-          setEmployee(y.data[0].id);
+        if (employees.data[0]) {
+          setEmployee(employees.data[0].id);
         }
       }
     })();
@@ -62,6 +63,12 @@ export default function Plan() {
   async function add() {
     if (!branch || !employee) return;
 
+    const startTime =
+      shiftType === "Früh" ? "08:00" : "14:30";
+
+    const endTime =
+      shiftType === "Früh" ? "12:30" : "18:00";
+
     const { error } = await createClient()
       .from("shifts")
       .upsert(
@@ -69,19 +76,20 @@ export default function Plan() {
           shift_date: date,
           branch_id: branch,
           employee_id: employee,
-          shift_type: "Früh",
-          start_time: "08:00",
-          end_time: "12:30",
+          shift_type: shiftType,
+          start_time: startTime,
+          end_time: endTime,
         },
         {
-          onConflict: "shift_date,branch_id,shift_type",
+          onConflict:
+            "shift_date,branch_id,shift_type",
         }
       );
 
     setMsg(
       error
         ? error.message
-        : "Frühschicht gespeichert."
+        : `${shiftType}-Schicht gespeichert`
     );
   }
 
@@ -93,8 +101,8 @@ export default function Plan() {
         <div className="toolbar">
           <select
             value={branch}
-            onChange={(x) =>
-              setBranch(+x.target.value)
+            onChange={(e) =>
+              setBranch(Number(e.target.value))
             }
           >
             {b.map((x) => (
@@ -109,8 +117,8 @@ export default function Plan() {
 
           <select
             value={employee}
-            onChange={(x) =>
-              setEmployee(+x.target.value)
+            onChange={(e) =>
+              setEmployee(Number(e.target.value))
             }
           >
             {e.map((x) => (
@@ -123,11 +131,25 @@ export default function Plan() {
             ))}
           </select>
 
+          <select
+            value={shiftType}
+            onChange={(e) =>
+              setShiftType(e.target.value)
+            }
+          >
+            <option value="Früh">
+              Vormittag (08:00–12:30)
+            </option>
+            <option value="Spät">
+              Nachmittag (14:30–18:00)
+            </option>
+          </select>
+
           <input
             type="date"
             value={date}
-            onChange={(x) =>
-              setDate(x.target.value)
+            onChange={(e) =>
+              setDate(e.target.value)
             }
           />
 
@@ -135,7 +157,7 @@ export default function Plan() {
             className="primary"
             onClick={add}
           >
-            Frühschicht speichern
+            Schicht speichern
           </button>
         </div>
 
