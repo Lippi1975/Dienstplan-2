@@ -195,6 +195,7 @@ function getShift(
 const days = [...new Set(shifts.map((s) => s.shift_date))]
   .sort()
   .slice(-7);
+  console.log("Vacations:", vacations);
   return (
     <main className="container">
       <div className="card">
