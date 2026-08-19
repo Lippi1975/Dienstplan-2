@@ -422,7 +422,15 @@ for (let i = 0; i < 7; i++) {
 <strong>
   KW {calendarWeek}
 </strong>
-
+          
+<button
+  className="primary"
+  onClick={() =>
+    setWeekOffset(0)
+  }
+>
+  Heute
+</button>
   <button
     onClick={() =>
       setWeekOffset(
