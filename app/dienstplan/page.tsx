@@ -68,9 +68,6 @@ await loadShifts();
 await loadVacations();
 }
 
-   
-    loadShifts();
-  }
 async function loadVacations() {
   const { data } = await createClient()
     .from("vacations")
