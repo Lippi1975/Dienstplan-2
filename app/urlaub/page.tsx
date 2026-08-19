@@ -28,14 +28,24 @@ export default function Urlaub() {
     if (data) setEmployees(data);
   }
 
-  async function loadVacations() {
-    const { data } = await supabase
-      .from("vacations")
-      .select("*")
-      .order("date_from");
+async function loadVacations() {
+  const { data } = await supabase
+    .from("vacations")
+    .select(`
+      id,
+      date_from,
+      date_to,
+      status,
+      employee_id,
+      employees (
+        name
+      )
+    `)
+    .order("date_from");
 
-    if (data) setVacations(data);
-  }
+  if (data) setVacations(data);
+}
+``
 
   async function saveVacation() {
     const { error } = await supabase.from("vacations").insert({
@@ -108,7 +118,9 @@ export default function Urlaub() {
 
         {vacations.map((v) => (
           <div key={v.id} className="card">
-            <strong>Mitarbeiter #{v.employee_id}</strong>
+            <strong>
+  {v.employees?.name ?? `Mitarbeiter #${v.employee_id}`}
+</strong>
 
             <div>
               {v.date_from} bis {v.date_to}
