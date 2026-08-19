@@ -413,15 +413,35 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
             Filiale 1 Nachmittag
           </div>
 
-          <div className="shift">
-            {
-              getShift(
-                day,
-                "Filiale 1",
-                "Spät"
-              )?.employees?.name || "-"
-            }
-          </div>
+{(() => {
+  const shift = getShift(
+    day,
+    "Filiale 1",
+    "Spät"
+  );
+
+  if (!shift) {
+    return <div className="shift">-</div>;
+  }
+
+  const vacation = employeeHasVacation(
+    shift.employee_id,
+    day
+  );
+
+  return (
+    <div
+      className="shift"
+      style={{
+        background: vacation ? "#fff3cd" : undefined,
+      }}
+    >
+      {vacation
+        ? `🟨 Urlaub: ${shift.employees?.name}`
+        : shift.employees?.name}
+    </div>
+  );
+})()}
         </div>
 
         <div className="slot">
@@ -429,15 +449,35 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
             Filiale 2 Vormittag
           </div>
 
-          <div className="shift">
-            {
-              getShift(
-                day,
-                "Filiale 2",
-                "Früh"
-              )?.employees?.name || "-"
-            }
-          </div>
+{(() => {
+  const shift = getShift(
+    day,
+    "Filiale 2",
+    "Früh"
+  );
+
+  if (!shift) {
+    return <div className="shift">-</div>;
+  }
+
+  const vacation = employeeHasVacation(
+    shift.employee_id,
+    day
+  );
+
+  return (
+    <div
+      className="shift"
+      style={{
+        background: vacation ? "#fff3cd" : undefined,
+      }}
+    >
+      {vacation
+        ? `🟨 Urlaub: ${shift.employees?.name}`
+        : shift.employees?.name}
+    </div>
+  );
+})()}
         </div>
 
         <div className="slot">
@@ -445,15 +485,35 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
             Filiale 2 Nachmittag
           </div>
 
-          <div className="shift">
-            {
-              getShift(
-                day,
-                "Filiale 2",
-                "Spät"
-              )?.employees?.name || "-"
-            }
-          </div>
+{(() => {
+  const shift = getShift(
+    day,
+    "Filiale 2",
+    "Spät"
+  );
+
+  if (!shift) {
+    return <div className="shift">-</div>;
+  }
+
+  const vacation = employeeHasVacation(
+    shift.employee_id,
+    day
+  );
+
+  return (
+    <div
+      className="shift"
+      style={{
+        background: vacation ? "#fff3cd" : undefined,
+      }}
+    >
+      {vacation
+        ? `🟨 Urlaub: ${shift.employees?.name}`
+        : shift.employees?.name}
+    </div>
+  );
+})()}
         </div>
       </div>
     ))}
