@@ -359,8 +359,7 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
             Filiale 1 Vormittag
           </div>
 
-<div
-  className="shift"
+<div className="shift"
   style={{
     background: getVacation(day)
       ? "#fff3cd"
