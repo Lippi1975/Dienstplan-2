@@ -141,6 +141,16 @@ export default function Plan() {
 
     await loadShifts();
   }
+function formatDate(dateString: string) {
+  const d = new Date(dateString);
+
+  return d.toLocaleDateString("de-DE", {
+    weekday: "short",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
 function getShift(
   date: string,
   branchName: string,
@@ -298,7 +308,9 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
   <div className="week">
     {days.map((day) => (
       <div key={day} className="day">
-        <div className="dayhead">{day}</div>
+<div className="dayhead">
+  {formatDate(day)}
+</div>
 
         <div className="slot">
           <div className="slottitle">
