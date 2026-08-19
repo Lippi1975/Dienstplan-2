@@ -217,12 +217,10 @@ function getShift(
   );
 }
 function getCalendarWeek(date: Date) {
-
-
   const target = new Date(date);
 
   const dayNr =
-    (date.getDay() + 6) % 7;
+    (target.getDay() + 6) % 7;
 
   target.setDate(
     target.getDate() - dayNr + 3
@@ -234,14 +232,20 @@ function getCalendarWeek(date: Date) {
     4
   );
 
-  const diffWeeks = Math.round(
-    (targetMonday.getTime() -
-      currentMonday.getTime()) /
-      (7 * 24 * 60 * 60 * 1000)
-  );
+  const diff =
+    target.getTime() -
+    firstThursday.getTime();
 
-  
-  function jumpToWeek() {
+  return (
+    1 +
+    Math.round(
+      diff /
+        (7 * 24 * 60 * 60 * 1000)
+    )
+  );
+}
+
+function jumpToWeek() {
   if (!jumpDate) return;
 
   const target = new Date(jumpDate);
@@ -266,22 +270,15 @@ function getCalendarWeek(date: Date) {
   currentMonday.setDate(
     currentMonday.getDate() - currentDay + 1
   );
-    
+
+  const diffWeeks = Math.round(
+    (targetMonday.getTime() -
+      currentMonday.getTime()) /
+      (7 * 24 * 60 * 60 * 1000)
+  );
+
   setWeekOffset(diffWeeks);
 }
-  
-  const diff =
-    target.getTime() -
-    firstThursday.getTime();
-
-  return (
-    1 +
-    Math.round(
-      diff / (7 * 24 * 60 * 60 * 1000)
-    )
-  );
-}
-  
 const days: string[] = [];
 
 const today = new Date();
