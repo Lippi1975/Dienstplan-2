@@ -216,6 +216,33 @@ function getShift(
       s.shift_type === shiftType
   );
 }
+function getCalendarWeek(date: Date) {
+  const target = new Date(date);
+
+  const dayNr =
+    (date.getDay() + 6) % 7;
+
+  target.setDate(
+    target.getDate() - dayNr + 3
+  );
+
+  const firstThursday = new Date(
+    target.getFullYear(),
+    0,
+    4
+  );
+
+  const diff =
+    target.getTime() -
+    firstThursday.getTime();
+
+  return (
+    1 +
+    Math.round(
+      diff / (7 * 24 * 60 * 60 * 1000)
+    )
+  );
+}
   
 const days: string[] = [];
 
@@ -241,6 +268,8 @@ for (let i = 0; i < 7; i++) {
     d.toISOString().split("T")[0]
   );
 }
+  const calendarWeek =
+  getCalendarWeek(monday);
   
   console.log("Vacations:", vacations);
   return (
@@ -390,11 +419,9 @@ for (let i = 0; i < 7; i++) {
     ← Vorherige Woche
   </button>
 
-  <strong>
-    KW {weekOffset === 0
-      ? "Aktuell"
-      : weekOffset}
-  </strong>
+<strong>
+  KW {calendarWeek}
+</strong>
 
   <button
     onClick={() =>
