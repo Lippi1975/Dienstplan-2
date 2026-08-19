@@ -17,6 +17,8 @@ export default function Plan() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [shifts, setShifts] = useState<any[]>([]);
+  const [vacations, setVacations] = useState<any[]>([]);
+
 
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
@@ -62,6 +64,22 @@ export default function Plan() {
       }
     }
 
+    async function loadVacations() {
+  const { data } = await createClient()
+    .from("vacations")
+    .select(`
+      id,
+      employee_id,
+      date_from,
+      date_to,
+      employees(name)
+    `);
+
+  if (data) {
+    setVacations(data);
+  }
+}
+    
     loadShifts();
   }
 
@@ -126,6 +144,7 @@ export default function Plan() {
       .eq("id", id);
 
     await loadShifts();
+    await loadVacations();
   }
 
   async function updateEmployee(
@@ -151,6 +170,13 @@ function formatDate(dateString: string) {
     year: "numeric",
   });
 }
+ function getVacation(day: string) {
+  return vacations.find(
+    (v) =>
+      day >= v.date_from &&
+      day <= v.date_to
+  );
+} 
 function getShift(
   date: string,
   branchName: string,
@@ -317,15 +343,22 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
             Filiale 1 Vormittag
           </div>
 
-          <div className="shift">
-            {
-              getShift(
-                day,
-                "Filiale 1",
-                "Früh"
-              )?.employees?.name || "-"
-            }
-          </div>
+<div
+  className="shift"
+  style={{
+    background: getVacation(day)
+      ? "#fff3cd"
+      : undefined,
+  }}
+>
+  {getVacation(day)
+    ? `🟨 Urlaub: ${getVacation(day)?.employees?.name}`
+    : getShift(
+        day,
+        "Filiale 1",
+        "Früh"
+      )?.employees?.name || "-"}
+</div>
         </div>
 
         <div className="slot">
