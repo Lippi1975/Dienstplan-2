@@ -82,7 +82,23 @@ export default function Plan() {
     
     loadShifts();
   }
+async function loadVacations() {
+  const { data } = await createClient()
+    .from("vacations")
+    .select(`
+      id,
+      employee_id,
+      date_from,
+      date_to,
+      employees(name)
+    `);
 
+  if (data) {
+    setVacations(data);
+  }
+}
+``
+  
   async function loadShifts() {
     const { data } = await createClient()
       .from("shifts")
@@ -144,7 +160,7 @@ export default function Plan() {
       .eq("id", id);
 
     await loadShifts();
-    await loadVacations();
+    //await loadVacations();
   }
 
   async function updateEmployee(
