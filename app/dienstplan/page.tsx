@@ -218,6 +218,22 @@ function getShift(
 }
 function getCalendarWeek(date: Date) {
 
+
+  const target = new Date(date);
+
+  const dayNr =
+    (date.getDay() + 6) % 7;
+
+  target.setDate(
+    target.getDate() - dayNr + 3
+  );
+
+  const firstThursday = new Date(
+    target.getFullYear(),
+    0,
+    4
+  );
+
   function jumpToWeek() {
   if (!jumpDate) return;
 
@@ -252,23 +268,7 @@ function getCalendarWeek(date: Date) {
 
   setWeekOffset(diffWeeks);
 }
-
-
-  const target = new Date(date);
-
-  const dayNr =
-    (date.getDay() + 6) % 7;
-
-  target.setDate(
-    target.getDate() - dayNr + 3
-  );
-
-  const firstThursday = new Date(
-    target.getFullYear(),
-    0,
-    4
-  );
-
+  
   const diff =
     target.getTime() -
     firstThursday.getTime();
