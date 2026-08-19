@@ -405,7 +405,7 @@ const days = [...new Set(shifts.map((s) => s.shift_date))]
         : shift.employees?.name}
     </div>
   );
-})()}>
+})()}
         </div>
 
         <div className="slot">
