@@ -8,9 +8,9 @@ export default function Urlaub() {
   const supabase = createClient();
 
   const [employees, setEmployees] = useState<any[]>([]);
-  const [employee, setEmployee] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -20,17 +20,19 @@ export default function Urlaub() {
   async function loadEmployees() {
     const { data } = await supabase
       .from("employees")
-      .select("*")
+      .select("id,name")
+      .eq("active", true)
       .order("name");
 
     if (data) setEmployees(data);
   }
 
-  async function save() {
+  async function saveVacation() {
     const { error } = await supabase.from("vacations").insert({
-      employee_id: employee,
-      start_date: start,
-      end_date: end,
+      employee_id: employeeId,
+      date_from: from,
+      date_to: to,
+      status: "genehmigt"
     });
 
     setMsg(error ? error.message : "Urlaub gespeichert");
@@ -39,42 +41,41 @@ export default function Urlaub() {
   return (
     <main className="container">
       <div className="card">
-        <h1>Urlaub</h1>
+        <h1>Urlaub verwalten</h1>
 
+        <label>Mitarbeiter</label>
         <select
-          value={employee}
-          onChange={(e) => setEmployee(e.target.value)}
+          value={employeeId}
+          onChange={(e) => setEmployeeId(e.target.value)}
         >
-          <option value="">Mitarbeiter wählen</option>
+          <option value="">Bitte wählen</option>
 
-          {employees.map((e) => (
-            <option key={e.id} value={e.id}>
-              {e.name}
+          {employees.map((emp) => (
+            <option key={emp.id} value={emp.id}>
+              {emp.name}
             </option>
           ))}
         </select>
 
-        <br /><br />
-
+        <label>Von</label>
         <input
           type="date"
-          value={start}
-          onChange={(e) => setStart(e.target.value)}
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
         />
 
-        <br /><br />
-
+        <label>Bis</label>
         <input
           type="date"
-          value={end}
-          onChange={(e) => setEnd(e.target.value)}
+          value={to}
+          onChange={(e) => setTo(e.target.value)}
         />
 
-        <br /><br />
-
-        <button className="primary" onClick={save}>
-          Urlaub speichern
-        </button>
+        <div style={{ marginTop: 16 }}>
+          <button className="primary" onClick={saveVacation}>
+            Urlaub speichern
+          </button>
+        </div>
 
         <p>{msg}</p>
       </div>
