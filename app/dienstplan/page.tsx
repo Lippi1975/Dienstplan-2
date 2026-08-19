@@ -14,8 +14,8 @@ type E = {
 };
 
 export default function Plan() {
-  const [b, setB] = useState<B[]>([]);
-  const [e, setE] = useState<E[]>([]);
+  const [branches, setBranches] = useState<B[]>([]);
+  const [employees, setEmployees] = useState<E[]>([]);
   const [shifts, setShifts] = useState<any[]>([]);
 
   const [branch, setBranch] = useState(0);
@@ -29,39 +29,41 @@ export default function Plan() {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  async function loadData() {
     const s = createClient();
 
-    (async () => {
-      const branches = await s
-        .from("branches")
-        .select("id,name")
-        .order("id");
+    const b = await s
+      .from("branches")
+      .select("id,name")
+      .order("id");
 
-      const employees = await s
-        .from("employees")
-        .select("id,name")
-        .eq("active", true)
-        .order("name");
+    const e = await s
+      .from("employees")
+      .select("id,name")
+      .eq("active", true)
+      .order("name");
 
-      if (branches.data) {
-        setB(branches.data);
+    if (b.data) {
+      setBranches(b.data);
 
-        if (branches.data[0]) {
-          setBranch(branches.data[0].id);
-        }
+      if (b.data[0]) {
+        setBranch(b.data[0].id);
       }
+    }
 
-      if (employees.data) {
-        setE(employees.data);
+    if (e.data) {
+      setEmployees(e.data);
 
-        if (employees.data[0]) {
-          setEmployee(employees.data[0].id);
-        }
+      if (e.data[0]) {
+        setEmployee(e.data[0].id);
       }
+    }
 
-      loadShifts();
-    })();
-  }, []);
+    loadShifts();
+  }
 
   async function loadShifts() {
     const { data } = await createClient()
@@ -70,10 +72,14 @@ export default function Plan() {
         id,
         shift_date,
         shift_type,
-        employees(name),
-        branches(name)
+        branch_id,
+        employee_id,
+        branches(name),
+        employees(name)
       `)
-      .order("shift_date", { ascending: false });
+      .order("shift_date", {
+        ascending: false,
+      });
 
     if (data) {
       setShifts(data);
@@ -81,13 +87,15 @@ export default function Plan() {
   }
 
   async function add() {
-    if (!branch || !employee) return;
-
     const startTime =
-      shiftType === "Früh" ? "08:00" : "14:30";
+      shiftType === "Früh"
+        ? "08:00"
+        : "14:30";
 
     const endTime =
-      shiftType === "Früh" ? "12:30" : "18:00";
+      shiftType === "Früh"
+        ? "12:30"
+        : "18:00";
 
     const { error } = await createClient()
       .from("shifts")
@@ -109,12 +117,33 @@ export default function Plan() {
     setMsg(
       error
         ? error.message
-        : `${shiftType}-Schicht gespeichert`
+        : "Schicht gespeichert"
     );
 
-    if (!error) {
-      loadShifts();
-    }
+    loadShifts();
+  }
+
+  async function deleteShift(id: number) {
+    await createClient()
+      .from("shifts")
+      .delete()
+      .eq("id", id);
+
+    loadShifts();
+  }
+
+  async function updateEmployee(
+    shiftId: number,
+    employeeId: number
+  ) {
+    await createClient()
+      .from("shifts")
+      .update({
+        employee_id: employeeId,
+      })
+      .eq("id", shiftId);
+
+    loadShifts();
   }
 
   return (
@@ -126,11 +155,16 @@ export default function Plan() {
           <select
             value={branch}
             onChange={(e) =>
-              setBranch(Number(e.target.value))
+              setBranch(
+                Number(e.target.value)
+              )
             }
           >
-            {b.map((x) => (
-              <option key={x.id} value={x.id}>
+            {branches.map((x) => (
+              <option
+                key={x.id}
+                value={x.id}
+              >
                 {x.name}
               </option>
             ))}
@@ -139,73 +173,16 @@ export default function Plan() {
           <select
             value={employee}
             onChange={(e) =>
-              setEmployee(Number(e.target.value))
+              setEmployee(
+                Number(e.target.value)
+              )
             }
           >
-            {e.map((x) => (
-              <option key={x.id} value={x.id}>
+            {employees.map((x) => (
+              <option
+                key={x.id}
+                value={x.id}
+              >
                 {x.name}
               </option>
-            ))}
-          </select>
-
-          <select
-            value={shiftType}
-            onChange={(e) =>
-              setShiftType(e.target.value)
-            }
-          >
-            <option value="Früh">
-              Vormittag (08:00–12:30)
-            </option>
-            <option value="Spät">
-              Nachmittag (14:30–18:00)
-            </option>
-          </select>
-
-          <input
-            type="date"
-            value={date}
-            onChange={(e) =>
-              setDate(e.target.value)
-            }
-          />
-
-          <button
-            className="primary"
-            onClick={add}
-          >
-            Schicht speichern
-          </button>
-        </div>
-
-        <p>{msg}</p>
-
-        <hr />
-
-        <h2>Gespeicherte Schichten</h2>
-
-        {shifts.map((s) => (
-          <div
-            key={s.id}
-            className="card"
-          >
-            <strong>{s.shift_date}</strong>
-
-            <div>
-              Filiale: {s.branches?.name}
-            </div>
-
-            <div>
-              Schicht: {s.shift_type}
-            </div>
-
-            <div>
-              Mitarbeiter: {s.employees?.name}
-            </div>
-          </div>
-        ))}
-      </div>
-    </main>
-  );
-}
+         
