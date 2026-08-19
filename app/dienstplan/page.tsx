@@ -141,7 +141,22 @@ export default function Plan() {
 
     await loadShifts();
   }
+function getShift(
+  date: string,
+  branchName: string,
+  shiftType: string
+) {
+  return shifts.find(
+    (s) =>
+      s.shift_date === date &&
+      s.branches?.name === branchName &&
+      s.shift_type === shiftType
+  );
+}
 
+const days = [...new Set(shifts.map((s) => s.shift_date))]
+  .sort()
+  .slice(-7);
   return (
     <main className="container">
       <div className="card">
@@ -277,6 +292,81 @@ export default function Plan() {
           </div>
         ))}
       </div>
+      <div className="card">
+  <h2>Wochenansicht</h2>
+
+  <div className="week">
+    {days.map((day) => (
+      <div key={day} className="day">
+        <div className="dayhead">{day}</div>
+
+        <div className="slot">
+          <div className="slottitle">
+            Filiale 1 Vormittag
+          </div>
+
+          <div className="shift">
+            {
+              getShift(
+                day,
+                "Filiale 1",
+                "Früh"
+              )?.employees?.name || "-"
+            }
+          </div>
+        </div>
+
+        <div className="slot">
+          <div className="slottitle">
+            Filiale 1 Nachmittag
+          </div>
+
+          <div className="shift">
+            {
+              getShift(
+                day,
+                "Filiale 1",
+                "Spät"
+              )?.employees?.name || "-"
+            }
+          </div>
+        </div>
+
+        <div className="slot">
+          <div className="slottitle">
+            Filiale 2 Vormittag
+          </div>
+
+          <div className="shift">
+            {
+              getShift(
+                day,
+                "Filiale 2",
+                "Früh"
+              )?.employees?.name || "-"
+            }
+          </div>
+        </div>
+
+        <div className="slot">
+          <div className="slottitle">
+            Filiale 2 Nachmittag
+          </div>
+
+          <div className="shift">
+            {
+              getShift(
+                day,
+                "Filiale 2",
+                "Spät"
+              )?.employees?.name || "-"
+            }
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
     </main>
   );
 }
