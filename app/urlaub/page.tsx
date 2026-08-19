@@ -1,36 +1,3 @@
-//export default function Urlaub(){return <main className="container"><div className="card"><h1>Urlaub</h1><p>Urlaubsverwaltung folgt im nächsten Schritt.</p></div></main>}
-const [vacations, setVacations] = useState<any[]>([]);
-async function loadVacations() {
-  const { data } = await supabase
-    .from("vacations")
-    .select(`
-      id,
-      date_from,
-      date_to,
-      status,
-      employees(name)
-    `)
-    .order("date_from");
-
-  if (data) setVacations(data);
-}
-useEffect(() => {
-  loadEmployees();
-  loadVacations();
-}, []);
-if (!error) {
-  loadVacations();
-}
-//Löschfunktion
-async function deleteVacation(id: number) {
-  await supabase
-    .from("vacations")
-    .delete()
-    .eq("id", id);
-
-  loadVacations();
-}
-//Löschfunktion
 "use client";
 
 import { useEffect, useState } from "react";
@@ -40,6 +7,7 @@ export default function Urlaub() {
   const supabase = createClient();
 
   const [employees, setEmployees] = useState<any[]>([]);
+  const [vacations, setVacations] = useState<any[]>([]);
   const [employeeId, setEmployeeId] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -47,6 +15,7 @@ export default function Urlaub() {
 
   useEffect(() => {
     loadEmployees();
+    loadVacations();
   }, []);
 
   async function loadEmployees() {
@@ -59,15 +28,37 @@ export default function Urlaub() {
     if (data) setEmployees(data);
   }
 
+  async function loadVacations() {
+    const { data } = await supabase
+      .from("vacations")
+      .select("*")
+      .order("date_from");
+
+    if (data) setVacations(data);
+  }
+
   async function saveVacation() {
     const { error } = await supabase.from("vacations").insert({
       employee_id: employeeId,
       date_from: from,
       date_to: to,
-      status: "genehmigt"
+      status: "genehmigt",
     });
 
     setMsg(error ? error.message : "Urlaub gespeichert");
+
+    if (!error) {
+      loadVacations();
+    }
+  }
+
+  async function deleteVacation(id: number) {
+    await supabase
+      .from("vacations")
+      .delete()
+      .eq("id", id);
+
+    loadVacations();
   }
 
   return (
@@ -110,24 +101,24 @@ export default function Urlaub() {
         </div>
 
         <p>{msg}</p>
+
         <hr />
 
-<h2>Urlaubsübersicht</h2>
+        <h2>Urlaubsübersicht</h2>
 
-{vacations.map((v) => (
-  <div key={v.id} className="card">
-    <strong>{v.employees?.name}</strong>
-    <div>
-      {v.date_from} bis {v.date_to}
-    </div>
+        {vacations.map((v) => (
+          <div key={v.id} className="card">
+            <strong>Mitarbeiter #{v.employee_id}</strong>
 
-    <button
-      onClick={() => deleteVacation(v.id)}
-    >
-      Löschen
-    </button>
-  </div>
-))}
+            <div>
+              {v.date_from} bis {v.date_to}
+            </div>
+
+            <button onClick={() => deleteVacation(v.id)}>
+              Löschen
+            </button>
+          </div>
+        ))}
       </div>
     </main>
   );
