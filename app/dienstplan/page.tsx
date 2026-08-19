@@ -56,30 +56,19 @@ export default function Plan() {
       }
     }
 
-    if (employeeData) {
-      setEmployees(employeeData);
+if (employeeData) {
+  setEmployees(employeeData);
 
-      if (employeeData.length > 0) {
-        setEmployee(employeeData[0].id);
-      }
-    }
-
-    async function loadVacations() {
-  const { data } = await createClient()
-    .from("vacations")
-    .select(`
-      id,
-      employee_id,
-      date_from,
-      date_to,
-      employees(name)
-    `);
-
-  if (data) {
-    setVacations(data);
+  if (employeeData.length > 0) {
+    setEmployee(employeeData[0].id);
   }
 }
-    
+
+await loadShifts();
+await loadVacations();
+}
+
+   
     loadShifts();
   }
 async function loadVacations() {
