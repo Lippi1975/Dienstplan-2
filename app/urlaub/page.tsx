@@ -123,8 +123,10 @@ async function loadVacations() {
 </strong>
 
             <div>
-              {v.date_from} bis {v.date_to}
-            </div>
+  {v.date_from === v.date_to
+    ? new Date(v.date_from).toLocaleDateString("de-DE")
+    : `${new Date(v.date_from).toLocaleDateString("de-DE")} bis ${new Date(v.date_to).toLocaleDateString("de-DE")}`}
+</div>
 
             <button onClick={() => deleteVacation(v.id)}>
               Löschen
