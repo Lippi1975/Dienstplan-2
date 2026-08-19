@@ -16,6 +16,7 @@ type E = {
 export default function Plan() {
   const [b, setB] = useState<B[]>([]);
   const [e, setE] = useState<E[]>([]);
+  const [shifts, setShifts] = useState<any[]>([]);
 
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
@@ -57,8 +58,27 @@ export default function Plan() {
           setEmployee(employees.data[0].id);
         }
       }
+
+      loadShifts();
     })();
   }, []);
+
+  async function loadShifts() {
+    const { data } = await createClient()
+      .from("shifts")
+      .select(`
+        id,
+        shift_date,
+        shift_type,
+        employees(name),
+        branches(name)
+      `)
+      .order("shift_date", { ascending: false });
+
+    if (data) {
+      setShifts(data);
+    }
+  }
 
   async function add() {
     if (!branch || !employee) return;
@@ -91,6 +111,10 @@ export default function Plan() {
         ? error.message
         : `${shiftType}-Schicht gespeichert`
     );
+
+    if (!error) {
+      loadShifts();
+    }
   }
 
   return (
@@ -106,10 +130,7 @@ export default function Plan() {
             }
           >
             {b.map((x) => (
-              <option
-                key={x.id}
-                value={x.id}
-              >
+              <option key={x.id} value={x.id}>
                 {x.name}
               </option>
             ))}
@@ -122,10 +143,7 @@ export default function Plan() {
             }
           >
             {e.map((x) => (
-              <option
-                key={x.id}
-                value={x.id}
-              >
+              <option key={x.id} value={x.id}>
                 {x.name}
               </option>
             ))}
@@ -162,6 +180,31 @@ export default function Plan() {
         </div>
 
         <p>{msg}</p>
+
+        <hr />
+
+        <h2>Gespeicherte Schichten</h2>
+
+        {shifts.map((s) => (
+          <div
+            key={s.id}
+            className="card"
+          >
+            <strong>{s.shift_date}</strong>
+
+            <div>
+              Filiale: {s.branches?.name}
+            </div>
+
+            <div>
+              Schicht: {s.shift_type}
+            </div>
+
+            <div>
+              Mitarbeiter: {s.employees?.name}
+            </div>
+          </div>
+        ))}
       </div>
     </main>
   );
