@@ -177,6 +177,14 @@ async function add() {
 function formatDate(dateString: string) {
   const d = new Date(dateString);
 
+  function isToday(dateString: string) {
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
+
+  return dateString === today;
+}
+  
   return d.toLocaleDateString("de-DE", {
     weekday: "short",
     day: "2-digit",
@@ -361,9 +369,34 @@ for (let i = 0; i < 7; i++) {
 
   <div className="week">
     {days.map((day) => (
-      <div key={day} className="day">
+     
+      <div
+  key={day}
+  className="day"
+  style={{
+    border: isToday(day)
+      ? "3px solid #2563eb"
+      : undefined,
+    background: isToday(day)
+      ? "#eff6ff"
+      : undefined,
+  }}
+>
+        
 <div className="dayhead">
   {formatDate(day)}
+
+  {isToday(day) && (
+    <div
+      style={{
+        fontSize: 12,
+        color: "#2563eb",
+        marginTop: 4,
+      }}
+    >
+      Heute
+    </div>
+  )}
 </div>
 
         <div className="slot">
