@@ -338,6 +338,7 @@ for (let i = 0; i < 7; i++) {
   getCalendarWeek(monday);
   
   console.log("Vacations:", vacations);
+  console.log("Holidays:", holidays);
   return (
     <main className="container">
  
@@ -388,6 +389,14 @@ for (let i = 0; i < 7; i++) {
   Gehe zu Datum
 </button>
 </div>
+          <div className="card">
+  <h2>Holiday Debug</h2>
+
+  <pre>
+    {JSON.stringify(holidays, null, 2)}
+  </pre>
+</div>
+
   <h2>Wochenansicht</h2>
 
   <div className="week">
