@@ -8,6 +8,9 @@ export default function Mitarbeiter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
 
   useEffect(() => {
     loadEmployees();
@@ -69,7 +72,20 @@ export default function Mitarbeiter() {
 
     loadEmployees();
   }
+async function saveEmployee() {
+  if (!editId) return;
 
+  await createClient()
+    .from("employees")
+    .update({
+      name: editName,
+      email: editEmail,
+    })
+    .eq("id", editId);
+
+  setEditId(null);
+  loadEmployees();
+}
   return (
     <main className="container">
 
