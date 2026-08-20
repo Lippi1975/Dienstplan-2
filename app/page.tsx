@@ -21,9 +21,7 @@ export default function Home() {
               Dienstplan
             </Link>
 
-            /schichten
-              Schichten
-            </Link>
+
 
             /urlaub
               Urlaub
