@@ -131,7 +131,46 @@ async function saveEmployee() {
             <strong>
               {emp.name}
             </strong>
+            
+{editId === emp.id && (
+  <div
+    style={{
+      marginTop: 10,
+      marginBottom: 10,
+    }}
+  >
+    <input
+      value={editName}
+      onChange={(e) =>
+        setEditName(e.target.value)
+      }
+      placeholder="Name"
+    />
 
+    <input
+      value={editEmail}
+      onChange={(e) =>
+        setEditEmail(e.target.value)
+      }
+      placeholder="E-Mail"
+    />
+
+    <button
+      className="primary"
+      onClick={saveEmployee}
+    >
+      Speichern
+    </button>
+
+    <button
+      onClick={() =>
+        setEditId(null)
+      }
+    >
+      Abbrechen
+    </button>
+  </div>
+)}
             <div>
               {emp.email || "-"}
             </div>
@@ -161,7 +200,18 @@ async function saveEmployee() {
                   ? "Deaktivieren"
                   : "Aktivieren"}
               </button>
-
+<button
+  style={{
+    marginLeft: 10,
+  }}
+  onClick={() => {
+    setEditId(emp.id);
+    setEditName(emp.name);
+    setEditEmail(emp.email || "");
+  }}
+>
+  Bearbeiten
+</button>
               <button
                 style={{
                   marginLeft: 10,
