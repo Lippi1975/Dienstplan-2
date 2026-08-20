@@ -226,17 +226,29 @@ export default function Schichten() {
             key={s.id}
             className="shift"
           >
-            <strong>
-              {s.shift_date}
-            </strong>
+<strong>
+  {new Date(s.shift_date).toLocaleDateString(
+    "de-DE",
+    {
+      weekday: "short",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }
+  )}
+</strong>
 
             <div>
               Filiale: {s.branches?.name}
             </div>
 
-            <div>
-              Schicht: {s.shift_type}
-            </div>
+         <div>
+  Schicht: {
+    s.shift_type === "Früh"
+      ? "Vormittag (08:00–12:30)"
+      : "Nachmittag (14:30–18:00)"
+  }
+</div>
 
             <select
               value={s.employee_id}
