@@ -18,12 +18,12 @@ export default function Plan() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [shifts, setShifts] = useState<any[]>([]);
   const [vacations, setVacations] = useState<any[]>([]);
-const [weekOffset, setWeekOffset] = useState(0);
-const [jumpDate, setJumpDate] = useState("");
+ const [weekOffset, setWeekOffset] = useState(0);
+ const [jumpDate, setJumpDate] = useState("");
   const [branch, setBranch] = useState(0);
   const [employee, setEmployee] = useState(0);
   const [shiftType, setShiftType] = useState("Früh");
-
+  const [holidays, setHolidays] = useState<any[]>([]);
   const [date, setDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
@@ -66,8 +66,19 @@ if (employeeData) {
 
 await loadShifts();
 await loadVacations();
+await loadHolidays();
 }
 
+  async function loadHolidays() {
+  const { data } = await createClient()
+    .from("holidays")
+    .select("*");
+
+  if (data) {
+    setHolidays(data);
+  }
+}
+  
 async function loadVacations() {
   const { data } = await createClient()
     .from("vacations")
@@ -201,6 +212,17 @@ function getVacation(day: string) {
   );
 }
 
+  function getHoliday(
+  date: string,
+  state: string
+) {
+  return holidays.find(
+    (h) =>
+      h.holiday_date === date &&
+      h.state === state
+  );
+}
+  
 function employeeHasVacation(
   employeeId: number,
   day: string
@@ -386,7 +408,27 @@ for (let i = 0; i < 7; i++) {
         
 <div className="dayhead">
   {formatDate(day)}
-
+  
+{getHoliday(
+  day,
+  "Niedersachsen"
+) && (
+  <div
+    style={{
+      fontSize: 12,
+      color: "#2563eb",
+      marginTop: 4,
+    }}
+  >
+    🎉 {
+      getHoliday(
+        day,
+        "Niedersachsen"
+      )?.holiday_name
+    }
+  </div>
+)}
+  
   {isToday(day) && (
     <div
       style={{
