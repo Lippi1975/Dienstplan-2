@@ -379,11 +379,19 @@ for (let i = 0; i < 7; i++) {
   );
 
   if (!shift) {
-    return (
-      <div className="shift">
-        -
-      </div>
-    );
+return (
+  <div
+    className="shift"
+    style={{
+      background: "#fee2e2",
+      color: "#991b1b",
+      fontWeight: "bold",
+      border: "1px solid #fca5a5",
+    }}
+  >
+    ⚪ Nicht besetzt
+  </div>
+);
   }
 
   const vacation = employeeHasVacation(
@@ -420,9 +428,21 @@ for (let i = 0; i < 7; i++) {
     "Spät"
   );
 
-  if (!shift) {
-    return <div className="shift">-</div>;
-  }
+if (!shift) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#fee2e2",
+        color: "#991b1b",
+        fontWeight: "bold",
+        border: "1px solid #fca5a5",
+      }}
+    >
+      ⚪ Nicht besetzt
+    </div>
+  );
+}
 
   const vacation = employeeHasVacation(
     shift.employee_id,
@@ -456,9 +476,21 @@ for (let i = 0; i < 7; i++) {
     "Früh"
   );
 
-  if (!shift) {
-    return <div className="shift">-</div>;
-  }
+if (!shift) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#fee2e2",
+        color: "#991b1b",
+        fontWeight: "bold",
+        border: "1px solid #fca5a5",
+      }}
+    >
+      ⚪ Nicht besetzt
+    </div>
+  );
+}
 
   const vacation = employeeHasVacation(
     shift.employee_id,
@@ -492,9 +524,21 @@ for (let i = 0; i < 7; i++) {
     "Spät"
   );
 
-  if (!shift) {
-    return <div className="shift">-</div>;
-  }
+if (!shift) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#fee2e2",
+        color: "#991b1b",
+        fontWeight: "bold",
+        border: "1px solid #fca5a5",
+      }}
+    >
+      ⚪ Nicht besetzt
+    </div>
+  );
+}
 
   const vacation = employeeHasVacation(
     shift.employee_id,
