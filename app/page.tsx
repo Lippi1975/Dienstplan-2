@@ -16,27 +16,27 @@ export default function Home() {
             Online-Prototyp für die Dienstplanung.
           </p>
 
-          <div className="links">
-            /dienstplan
-              Dienstplan
-            </Link>
+         <div className="links">
+  /dienstplan
+    Dienstplan
+  </Link>
 
-            /schichten
-              Schichten
-            </Link>
+  /schichten
+    Schichten
+  </Link>
 
-            <Link href="/urlaub">
-Urlaub
-            </Link>
+  /urlaub
+    Urlaub
+  </Link>
 
-            /mitarbeiter
-              Mitarbeiter
-            </Link>
+  /mitarbeiter
+    Mitarbeiter
+  </Link>
 
-            /login
-              Login
-            </Link>
-          </div>
+  /login
+    Login
+  </Link>
+</div>
         </div>
       </main>
     </>
