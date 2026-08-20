@@ -1,8 +1,8 @@
-import Link from "next/link";
+//import Link from "next/link";
 
-export default function Home() {
-  return (
-    <>
+//export default function Home() {
+  //return (
+    //<>
       <header className="top">
         <h1>Mein Dienstplan</h1>
         <p>2 Filialen · 6 Mitarbeiter</p>
@@ -16,27 +16,27 @@ export default function Home() {
             Online-Prototyp für die Dienstplanung.
           </p>
 
-          <div className="links">
-          /dienstplan
-              Dienstplan
-            </Link>
+   <div className="links">
+  /dienstplan
+    Dienstplan
+  </Link>
 
-            /schichten
-              Schichten
-            </Link>
+  /schichten
+    Schichten
+  </Link>
 
-            /urlaub
-              Urlaub
-            </Link>
+  /urlaub
+    Urlaub
+  </Link>
 
-            /mitarbeiter
-              Mitarbeiter
-            </Link>
+  /mitarbeiter
+    Mitarbeiter
+  </Link>
 
-            /login
-              Login
-            </Link>
-          </div>
+  /login
+    Login
+  </Link>
+</div>
         </div>
       </main>
     </>
