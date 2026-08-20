@@ -177,9 +177,6 @@ async function add() {
 function formatDate(dateString: string) {
   const d = new Date(dateString);
 
-  return dateString === today;
-}
-  
   return d.toLocaleDateString("de-DE", {
     weekday: "short",
     day: "2-digit",
@@ -188,12 +185,12 @@ function formatDate(dateString: string) {
   });
 }
 
-  function isToday(dateString: string) {
-  const today = new Date()
+function isToday(dateString: string) {
+  const todayString = new Date()
     .toISOString()
     .split("T")[0];
 
-  return dateString === today;
+  return dateString === todayString;
 }
 
 function getVacation(day: string) {
