@@ -25,8 +25,8 @@ export default function Home() {
               Schichten
             </Link>
 
-            /urlaub
-              Urlaub
+            <Link href="/urlaub">
+Urlaub
             </Link>
 
             /mitarbeiter
