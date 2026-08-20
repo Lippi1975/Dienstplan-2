@@ -177,11 +177,6 @@ async function add() {
 function formatDate(dateString: string) {
   const d = new Date(dateString);
 
-  function isToday(dateString: string) {
-  const today = new Date()
-    .toISOString()
-    .split("T")[0];
-
   return dateString === today;
 }
   
@@ -192,6 +187,15 @@ function formatDate(dateString: string) {
     year: "numeric",
   });
 }
+
+  function isToday(dateString: string) {
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
+
+  return dateString === today;
+}
+
 function getVacation(day: string) {
   return vacations.find(
     (v) =>
