@@ -310,26 +310,7 @@ for (let i = 0; i < 7; i++) {
   return (
     <main className="container">
  
-     
-            </select>
-
-            <div
-              style={{
-                marginTop: "10px",
-              }}
-            >
-              <button
-                onClick={() =>
-                  deleteShift(s.id)
-                }
-              >
-                Löschen
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="card">
+        <div className="card">
         <div className="toolbar">
   <button
     onClick={() =>
