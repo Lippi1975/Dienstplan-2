@@ -20,22 +20,6 @@ export default function Home() {
             /dienstplan
               Dienstplan
             </Link>
-        
-          /schichten
-            Schichten
-        </Link>
-
-            /urlaub
-              Urlaub
-            </Link>
-
-            /mitarbeiter
-              Mitarbeiter
-            </Link>
-
-            /login
-              Login
-            </Link>
           </div>
         </div>
       </main>
