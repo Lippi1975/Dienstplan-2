@@ -90,7 +90,10 @@ async function saveEmployee() {
     <main className="container">
 
       <div className="card">
-        <h1>Mitarbeiter</h1>
+        
+        <h1>
+        Mitarbeiter ({employees.length})
+        </h1>
 
         <div className="toolbar">
           <input
