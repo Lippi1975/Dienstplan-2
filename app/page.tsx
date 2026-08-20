@@ -1,8 +1,8 @@
 //import Link from "next/link";
 
-//export default function Home() {
-  //return (
-    //<>
+export default function Home() {
+  return (
+    <>
       <header className="top">
         <h1>Mein Dienstplan</h1>
         <p>2 Filialen · 6 Mitarbeiter</p>
