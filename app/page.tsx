@@ -17,8 +17,8 @@ export default function Home() {
           </p>
 
           <div className="links">
-            <Link href="/dienstplan">
-Dienstplan
+          /dienstplan
+              Dienstplan
             </Link>
 
             /schichten
