@@ -1,3 +1,4 @@
+import Link from "next/link";
 "use client";
 
 import { useEffect, useState } from "react";
@@ -149,6 +150,11 @@ export default function Schichten() {
 
   return (
     <main className="container">
+      <div style={{ marginBottom: 15 }}>
+  /
+    <button>🏠 Startseite</button>
+  </Link>
+</div>
       <div className="card">
         <h1>Schichten verwalten</h1>
 
