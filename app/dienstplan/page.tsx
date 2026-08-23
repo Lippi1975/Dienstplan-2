@@ -509,6 +509,14 @@ return (
             Filiale 1 Nachmittag
           </div>
 
+    <hr
+  style={{
+    margin: "12px 0",
+    border: "none",
+    borderTop: "1px solid #d1d5db",
+  }}
+/>      
+
 {(() => {
   const shift = getShift(
     day,
