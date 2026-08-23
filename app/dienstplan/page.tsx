@@ -341,14 +341,7 @@ for (let i = 0; i < 7; i++) {
   return (
     <main className="container">
 
-<div style={{ marginBottom: 15 }}>
-  /
-    <button>
-      ← Zurück zur Startseite
-    </button>
-  </Link>
-</div>
-      
+     
         <div className="card">
         <div className="toolbar">
   <button
