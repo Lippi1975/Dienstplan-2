@@ -341,6 +341,16 @@ for (let i = 0; i < 7; i++) {
   return (
     <main className="container">
 
+    <a
+  href="https://dienstplan-2.vercel.app/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <button>
+    ← Hauptmenü
+  </button>
+</a>
      
         <div className="card">
         <div className="toolbar">
