@@ -531,15 +531,7 @@ if (!shift) {
     >
       ⚪ Nicht besetzt
     </div>
-
-        <hr
-  style={{
-    margin: "12px 0",
-    border: "none",
-    borderTop: "1px solid #d1d5db",
-  }}
-/>  
-  
+ 
   );
 }
 
