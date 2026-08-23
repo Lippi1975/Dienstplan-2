@@ -73,6 +73,18 @@ async function loadVacations() {
 
   return (
     <main className="container">
+
+<a
+  href="https://dienstplan-2.vercel.app/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <button>
+    ← Hauptmenü
+  </button>
+</a>
+      
       <div className="card">
         <h1>Urlaub verwalten</h1>
 
