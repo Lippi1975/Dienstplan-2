@@ -149,6 +149,18 @@ export default function Schichten() {
 
   return (
     <main className="container">
+
+      <a
+  href="https://dienstplan-2.vercel.app/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <button>
+    ← Hauptmenü
+  </button>
+</a>
+      
       <div className="card">
         <h1>Schichten verwalten</h1>
 
