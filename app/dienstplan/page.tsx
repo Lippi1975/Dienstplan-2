@@ -630,7 +630,7 @@ if (!shift) {
 
         <div className="slot">
           <div className="slottitle">
-            F{branch2} Nachmittag
+            {branch2} Nachmittag
           </div>
 
 {(() => {
