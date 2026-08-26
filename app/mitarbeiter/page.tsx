@@ -12,6 +12,8 @@ export default function Mitarbeiter() {
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [editPassword, setEditPassword] =
+  useState("");
 
   useEffect(() => {
     loadEmployees();
@@ -82,6 +84,7 @@ async function saveEmployee() {
     .update({
       name: editName,
       email: editEmail,
+      app_password: editPassword,
     })
     .eq("id", editId);
 
@@ -179,6 +182,16 @@ async function saveEmployee() {
       }
       placeholder="E-Mail"
     />
+    <input
+  type="password"
+  value={editPassword}
+  onChange={(e) =>
+    setEditPassword(
+      e.target.value
+    )
+  }
+  placeholder="Passwort"
+/>
 
     <button
       className="primary"
@@ -237,6 +250,9 @@ async function saveEmployee() {
     setEditId(emp.id);
     setEditName(emp.name);
     setEditEmail(emp.email || "");
+    setEditPassword(
+emp.app_password || ""
+);
   }}
 >
   Bearbeiten
