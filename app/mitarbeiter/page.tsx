@@ -11,6 +11,7 @@ export default function Mitarbeiter() {
   const [editId, setEditId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     loadEmployees();
@@ -36,6 +37,7 @@ export default function Mitarbeiter() {
         name,
         email,
         active: true,
+        app_password: password,
       });
 
     setMsg(
@@ -122,6 +124,15 @@ async function saveEmployee() {
               setEmail(e.target.value)
             }
           />
+
+          <input
+  type="password"
+  placeholder="Passwort"
+  value={password}
+  onChange={(e) =>
+    setPassword(e.target.value)
+  }
+/>
 
           <button
             className="primary"
