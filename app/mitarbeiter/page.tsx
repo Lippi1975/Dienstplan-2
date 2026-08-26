@@ -197,6 +197,10 @@ async function saveEmployee() {
                 : "❌ Inaktiv"}
             </div>
 
+            <div>
+  Rolle: {emp.role}
+</div>
+
             <div
               style={{
                 marginTop: 10,
