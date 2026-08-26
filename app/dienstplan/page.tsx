@@ -456,7 +456,7 @@ for (let i = 0; i < 7; i++) {
 
         <div className="slot">
           <div className="slottitle">
-            Filiale 1 Vormittag
+            Hunteburg Vormittag
           </div>
 
 {(() => {
