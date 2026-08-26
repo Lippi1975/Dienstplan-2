@@ -267,6 +267,14 @@ function getCalendarWeek(date: Date) {
     target.getTime() -
     firstThursday.getTime();
 
+const branch1 =
+  branches.find((b) => b.id === 1)?.name ||
+  "Filiale 1";
+
+const branch2 =
+  branches.find((b) => b.id === 2)?.name ||
+  "Filiale 2";
+  
   return (
     1 +
     Math.round(
@@ -456,13 +464,13 @@ for (let i = 0; i < 7; i++) {
 
         <div className="slot">
           <div className="slottitle">
-            Hunteburg Vormittag
+            {branch1} Vormittag
           </div>
 
 {(() => {
   const shift = getShift(
     day,
-    "Filiale 1",
+    branch1,
     "Früh"
   );
 
@@ -506,7 +514,7 @@ return (
 
         <div className="slot">
           <div className="slottitle">
-            Filiale 1 Nachmittag
+            {branch1} Nachmittag
           </div>
 
     
@@ -514,7 +522,7 @@ return (
 {(() => {
   const shift = getShift(
     day,
-    "Filiale 1",
+    branch1,
     "Spät"
   );
 
@@ -565,13 +573,13 @@ if (!shift) {
 
         <div className="slot">
           <div className="slottitle">
-            Filiale 2 Vormittag
+            {branch2} Vormittag
           </div>
 
 {(() => {
   const shift = getShift(
     day,
-    "Filiale 2",
+    branch2,
     "Früh"
   );
 
@@ -613,13 +621,13 @@ if (!shift) {
 
         <div className="slot">
           <div className="slottitle">
-            Filiale 2 Nachmittag
+            F{branch2} Nachmittag
           </div>
 
 {(() => {
   const shift = getShift(
     day,
-    "Filiale 2",
+    branch2,
     "Spät"
   );
 
