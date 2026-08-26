@@ -574,9 +574,9 @@ if (!shift) {
       
         <hr
   style={{
-    margin: "12px 0",
+    margin: "15px 0",
     border: "none",
-    borderTop: "1px solid #d1d5db",
+    borderTop: "3px solid #2563eb",
   }}
 />
 
