@@ -342,6 +342,15 @@ for (let i = 0; i < 7; i++) {
     d.toISOString().split("T")[0]
   );
 }
+
+const branch1 =
+  branches.find((b) => b.id === 1)?.name ||
+  "Filiale 1";
+
+const branch2 =
+  branches.find((b) => b.id === 2)?.name ||
+  "Filiale 2";
+  
   const calendarWeek =
   getCalendarWeek(monday);
   
