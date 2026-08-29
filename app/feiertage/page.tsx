@@ -29,13 +29,36 @@ export default function Feiertage() {
   async function addHoliday() {
     if (!date || !name) return;
 
-    const { error } = await createClient()
-      .from("holidays")
-      .insert({
+let error = null;
+
+if (state === "Beide") {
+  const result = await createClient()
+    .from("holidays")
+    .insert([
+      {
         holiday_date: date,
         holiday_name: name,
-        state: state,
-      });
+        state: "Niedersachsen",
+      },
+      {
+        holiday_date: date,
+        holiday_name: name,
+        state: "Nordrhein-Westfalen",
+      },
+    ]);
+
+  error = result.error;
+} else {
+  const result = await createClient()
+    .from("holidays")
+    .insert({
+      holiday_date: date,
+      holiday_name: name,
+      state: state,
+    });
+
+  error = result.error;
+}
 
     setMsg(
       error
@@ -108,20 +131,24 @@ export default function Feiertage() {
             }
           />
 
-          <select
-            value={state}
-            onChange={(e) =>
-              setState(e.target.value)
-            }
-          >
-            <option value="Niedersachsen">
-              Niedersachsen
-            </option>
+<select
+  value={state}
+  onChange={(e) =>
+    setState(e.target.value)
+  }
+>
+  <option value="Beide">
+    Beide Bundesländer
+  </option>
 
-            <option value="Nordrhein-Westfalen">
-              Nordrhein-Westfalen
-            </option>
-          </select>
+  <option value="Niedersachsen">
+    Niedersachsen
+  </option>
+
+  <option value="Nordrhein-Westfalen">
+    Nordrhein-Westfalen
+  </option>
+</select>
 
           <button
             className="primary"
