@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase";
 
 export default function Feiertage() {
@@ -18,63 +19,72 @@ export default function Feiertage() {
     const { data } = await createClient()
       .from("holidays")
       .select("*")
-      .order("holiday_d*te");
+      .order("holiday_date");
 
     if (data) {
-      setHo*idays(data);
+      setHolidays(data);
     }
   }
 
-  async fu*ction addHoliday() {
-    if (!date*|| !name) return;
+  async function addHoliday() {
+    if (!date || !name) return;
 
-    const { err*r } = await createClient()
-      .*rom("holidays")
+    const { error } = await createClient()
+      .from("holidays")
       .insert({
-  *     holiday_date: date,
-        h*liday_name: name,
-        state: s*ate,
+        holiday_date: date,
+        holiday_name: name,
+        state: state,
       });
 
     setMsg(
-      *rror
+      error
         ? error.message
-     *  : "Feiertag gespeichert"
+        : "Feiertag gespeichert"
     );
-*    setDate("");
-    setName("");
-*    await loadHolidays();
+
+    if (!error) {
+      setDate("");
+      setName("");
+    }
+
+    await loadHolidays();
   }
 
-  a*ync function deleteHoliday(id: num*er) {
+  async function deleteHoliday(id: number) {
     await createClient()
-   *  .from("holidays")
-      .delete(*
+      .from("holidays")
+      .delete()
       .eq("id", id);
 
-    await l*adHolidays();
+    await loadHolidays();
   }
 
-  function form*tDate(dateString: string) {
-    return new Date(dateString)
-      .toLocaleDateString("de-DE", {
+  function formatDate(dateString: string) {
+    return new Date(dateString).toLocaleDateString(
+      "de-DE",
+      {
         weekday: "short",
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      });
+      }
+    );
   }
 
   return (
     <main className="container">
 
-      <div style={{ marginBottom: 15 }}>
-        /
-          <button>
-            ← Hauptmenü
-          </button>
-        </Link>
-      </div>
+    <a
+  href="https://dienstplan-2.vercel.app/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <button>
+    ← Hauptmenü
+  </button>
+</a>
 
       <div className="card">
         <h1>Feiertage</h1>
@@ -90,6 +100,7 @@ export default function Feiertage() {
           />
 
           <input
+            type="text"
             placeholder="Feiertagsname"
             value={name}
             onChange={(e) =>
@@ -131,27 +142,25 @@ export default function Feiertage() {
           Feiertagsliste ({holidays.length})
         </h2>
 
-        {holidays.map((h) => (
+        {holidays.map((holiday) => (
           <div
-            key={h.id}
+            key={holiday.id}
             className="shift"
           >
             <strong>
               {formatDate(
-                h.holiday_date
+                holiday.holiday_date
               )}
             </strong>
 
             <div>
-              Feiertag:
-              {" "}
-              {h.holiday_name}
+              Feiertag:{" "}
+              {holiday.holiday_name}
             </div>
 
             <div>
-              Bundesland:
-              {" "}
-              {h.state}
+              Bundesland:{" "}
+              {holiday.state}
             </div>
 
             <div
@@ -161,7 +170,9 @@ export default function Feiertage() {
             >
               <button
                 onClick={() =>
-                  deleteHoliday(h.id)
+                  deleteHoliday(
+                    holiday.id
+                  )
                 }
               >
                 Löschen
