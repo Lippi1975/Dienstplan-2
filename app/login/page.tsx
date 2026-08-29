@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { createClient } from "@/lib/supabase";
 
 export default function Login() {
@@ -37,13 +36,16 @@ export default function Login() {
   return (
     <main className="container">
       
-      <div style={{ marginBottom: 15 }}>
-  /
-    <button>
-      ← Hauptmenü
-    </button>
-  </Link>
-</div>
+            <a
+  href="https://dienstplan-2.vercel.app/"
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <button>
+    ← Hauptmenü
+  </button>
+</a>
       <div className="card">
 
         <h1>Login</h1>
