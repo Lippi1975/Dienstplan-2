@@ -22,6 +22,9 @@ export default function Home(){
           
           <Link href="/mitarbeiter">Mitarbeiter
           </Link>
+
+          <Link href="/feiertage">Feiertage
+          </Link>
           
           <Link href="/login">Login
           </Link>
