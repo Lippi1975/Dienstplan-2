@@ -570,6 +570,28 @@ return (
     
 
 {(() => {
+  const holiday = isHoliday(
+  day,
+  branch1State
+);
+
+if (holiday) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#dbeafe",
+        color: "#1d4ed8",
+        fontWeight: "bold",
+        border: "1px solid #93c5fd",
+      }}
+    >
+      🎉 Feiertag
+      <br />
+      {holiday.holiday_name}
+    </div>
+  );
+}
   const shift = getShift(
     day,
     branch1,
@@ -627,6 +649,28 @@ if (!shift) {
           </div>
 
 {(() => {
+  const holiday = isHoliday(
+  day,
+  branch1State
+);
+
+if (holiday) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#dbeafe",
+        color: "#1d4ed8",
+        fontWeight: "bold",
+        border: "1px solid #93c5fd",
+      }}
+    >
+      🎉 Feiertag
+      <br />
+      {holiday.holiday_name}
+    </div>
+  );
+}
   const shift = getShift(
     day,
     branch2,
@@ -675,6 +719,28 @@ if (!shift) {
           </div>
 
 {(() => {
+  const holiday = isHoliday(
+  day,
+  branch1State
+);
+
+if (holiday) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#dbeafe",
+        color: "#1d4ed8",
+        fontWeight: "bold",
+        border: "1px solid #93c5fd",
+      }}
+    >
+      🎉 Feiertag
+      <br />
+      {holiday.holiday_name}
+    </div>
+  );
+}
   const shift = getShift(
     day,
     branch2,
