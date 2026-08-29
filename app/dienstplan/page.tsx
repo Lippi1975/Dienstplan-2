@@ -651,7 +651,7 @@ if (!shift) {
 {(() => {
   const holiday = isHoliday(
   day,
-  branch1State
+  branch2State
 );
 
 if (holiday) {
@@ -721,7 +721,7 @@ if (!shift) {
 {(() => {
   const holiday = isHoliday(
   day,
-  branch1State
+  branch2State
 );
 
 if (holiday) {
