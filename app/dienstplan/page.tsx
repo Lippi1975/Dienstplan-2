@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase";
 type Branch = {
   id: number;
   name: string;
+  state: string;
 };
 
 type Employee = {
@@ -29,6 +30,13 @@ export default function Plan() {
   );
 
   const [msg, setMsg] = useState("");
+  const branch1State =
+  branches.find((b) => b.id === 1)?.state ||
+  "Niedersachsen";
+
+const branch2State =
+  branches.find((b) => b.id === 2)?.state ||
+  "Nordrhein-Westfalen";
 
   useEffect(() => {
     loadData();
@@ -39,7 +47,7 @@ export default function Plan() {
 
     const { data: branchData } = await supabase
       .from("branches")
-      .select("id,name")
+      .select("id,name,state")
       .order("id");
 
     const { data: employeeData } = await supabase
@@ -213,6 +221,17 @@ function getVacation(day: string) {
 }
 
   function getHoliday(
+  date: string,
+  state: string
+) {
+  return holidays.find(
+    (h) =>
+      h.holiday_date === date &&
+      h.state === state
+  );
+}
+
+function isHoliday(
   date: string,
   state: string
 ) {
@@ -477,6 +496,28 @@ const branch2 =
           </div>
 
 {(() => {
+  const holiday = isHoliday(
+  day,
+  branch1State
+);
+
+if (holiday) {
+  return (
+    <div
+      className="shift"
+      style={{
+        background: "#dbeafe",
+        color: "#1d4ed8",
+        fontWeight: "bold",
+        border: "1px solid #93c5fd",
+      }}
+    >
+      🎉 Feiertag
+      <br />
+      {holiday.holiday_name}
+    </div>
+  );
+}
   const shift = getShift(
     day,
     branch1,
