@@ -1,4 +1,13 @@
 import Link from "next/link";
+"use client";
+
+const currentEmployee =
+  typeof window !== "undefined"
+    ? JSON.parse(
+        localStorage.getItem("employee") ||
+        "null"
+      )
+    : null;
 export default function Home(){
   return <>
     <header className="top">
@@ -19,12 +28,16 @@ export default function Home(){
           
           <Link href="/urlaub">Urlaub
           </Link>
-          
+
+          {currentEmployee?.role === "admin" && (
           <Link href="/mitarbeiter">Mitarbeiter
           </Link>
+          )}
 
+          {currentEmployee?.role === "admin" && (
           <Link href="/feiertage">Feiertage
           </Link>
+          )}
           
           <Link href="/login">Login
           </Link>
