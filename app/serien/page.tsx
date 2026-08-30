@@ -169,9 +169,10 @@ function branchName(id: number) {
         </button>
       </a>
 
-      <div className="card">
+      <div className="card from-card">
         <h1>Serienschichten</h1>
 
+        <div className="form-group">
         <label>Mitarbeiter</label>
 
         <select
@@ -194,6 +195,7 @@ function branchName(id: number) {
           ))}
         </select>
 
+        <div className="form-group">
         <label>Filiale</label>
 
         <select
@@ -216,6 +218,7 @@ function branchName(id: number) {
           ))}
         </select>
 
+        <div className="form-group">
         <label>Wochentag</label>
 
         <select
@@ -233,7 +236,8 @@ function branchName(id: number) {
           <option value="0">Sonntag</option>
 </select>
 
-<label>Schicht</label>
+          <div className="form-group">
+          <label>Schicht</label>
 
 <select
   value={shiftType}
@@ -250,7 +254,8 @@ function branchName(id: number) {
   </option>
 </select>
 
-<label>Gültig von</label>
+            <div className="form-group">
+            <label>Gültig von</label>
 
 <input
   type="date"
@@ -260,7 +265,8 @@ function branchName(id: number) {
   }
 />
 
-<label>Gültig bis</label>
+          <div className="form-group">
+          <label>Gültig bis</label>
 
 <input
   type="date"
@@ -272,7 +278,7 @@ function branchName(id: number) {
 
 <div style={{ marginTop: 20 }}>
   <button
-    className="primary"
+    className="primary form-submit"
     onClick={saveTemplate}
   >
     Serie speichern
