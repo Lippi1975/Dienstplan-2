@@ -90,14 +90,14 @@ await loadTemplates();
   }
 }
 
-  async function loadTemplates() {
-  const { data } = await createClient()
-    .from("shift_templates")
-    .select(`
-      *,
-      employees(name),
-      branches(name)
-    `);
+async function loadTemplates() {
+  const { data, error } =
+    await createClient()
+      .from("shift_templates")
+      .select("*");
+
+  console.log("Templates DB:", data);
+  console.log("Template Error:", error);
 
   if (data) {
     setTemplates(data);
