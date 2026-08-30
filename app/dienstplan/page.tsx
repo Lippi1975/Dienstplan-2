@@ -13,7 +13,7 @@ type Employee = {
   id: number;
   name: string;
 };
- 
+  
 export default function Plan() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
