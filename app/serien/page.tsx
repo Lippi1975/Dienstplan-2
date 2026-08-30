@@ -78,6 +78,40 @@ export default function Serien() {
     }
   }
 
+async function deleteTemplate(
+  id: number
+) {
+  await createClient()
+    .from("shift_templates")
+    .delete()
+    .eq("id", id);
+
+  loadTemplates();
+}
+
+function weekdayName(
+  weekday: number
+) {
+  switch (weekday) {
+    case 1:
+      return "Montag";
+    case 2:
+      return "Dienstag";
+    case 3:
+      return "Mittwoch";
+    case 4:
+      return "Donnerstag";
+    case 5:
+      return "Freitag";
+    case 6:
+      return "Samstag";
+    case 0:
+      return "Sonntag";
+    default:
+      return "";
+  }
+}  
+
   return (
     <main className="container">
 
@@ -203,6 +237,56 @@ export default function Serien() {
 </div>
 
 <p>{msg}</p>
+        <hr />
+
+<h2>Gespeicherte Serien</h2>
+
+{templates.map((t) => (
+  <div
+    key={t.id}
+    className="card"
+  >
+    <strong>
+      {t.employees?.name}
+    </strong>
+
+    <div>
+      Filiale: {t.branches?.name}
+    </div>
+
+    <div>
+      Tag: {weekdayName(t.weekday)}
+    </div>
+
+    <div>
+      Schicht:
+      {" "}
+      {t.shift_type === "Früh"
+        ? "Vormittag"
+        : "Nachmittag"}
+    </div>
+
+    <div>
+      Gültig von:
+      {" "}
+      {t.valid_from}
+    </div>
+
+    <div>
+      Gültig bis:
+      {" "}
+      {t.valid_until}
+    </div>
+
+    <button
+      onClick={() =>
+        deleteTemplate(t.id)
+      }
+    >
+      Löschen
+    </button>
+  </div>
+))}
 
       </div>
     </main>
