@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase";
 type Branch = {
   id: number;
   name: string;
+  state: string;
 };
 
 type Employee = {
@@ -40,12 +41,12 @@ export default function Schichten() {
 
     const { data: branchData } = await supabase
       .from("branches")
-      .select("id,name")
+      .select("id,name,state")
       .order("id");
 
     const { data: employeeData } = await supabase
       .from("employees")
-      .select("id,name")
+      .select("id,name,state")
       .eq("active", true)
       .order("name");
 
@@ -68,18 +69,17 @@ export default function Schichten() {
     await loadShifts();
   }
 
-  async function loadShifts() {
-
     async function loadHolidays() {
   const { data } = await createClient()
     .from("holidays")
     .select("*");
 
   if (data) {
-    setHolidays*data);
+    setHolidays(data);
   }
 }
-    
+      
+  async function loadShifts() {
     const { data } = await createClient()
       .from("shifts")
       .select(`
