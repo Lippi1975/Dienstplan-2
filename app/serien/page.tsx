@@ -51,8 +51,8 @@ console.log(error);
 
 if (data) {
   setTemplates(data);
+  }
 }
-
   async function saveTemplate() {
     const { error } = await createClient()
       .from("shift_templates")
@@ -235,7 +235,7 @@ function weekdayName(
 </div>
 
 <p>{msg}</p>
-        <p>Anzahl Serien: *templates.length}</p>
+        <p>Anzahl Serien: (templates.length}</p>
         <hr />
 
 <h2>Gespeicherte Serien</h2>
