@@ -583,10 +583,14 @@ return (
 );
   }
 
-  const vacation = employeeHasVacation(
-    shift.employee_id,
-    day
-  );
+const employeeId =
+  shift?.employee_id ??
+  template?.employee_id;
+
+const vacation = employeeHasVacation(
+  employeeId,
+  day
+);
 
   return (
     <div
