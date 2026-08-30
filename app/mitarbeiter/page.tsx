@@ -4,6 +4,26 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase";
 
 export default function Mitarbeiter() {
+  const currentEmployee =
+  typeof window !== "undefined"
+    ? JSON.parse(
+        localStorage.getItem("employee") ||
+        "null"
+      )
+    : null;
+
+if (currentEmployee?.role !== "admin") {
+  return (
+    <main className="container">
+      <div className="card">
+        <h1>Kein Zugriff</h1>
+        <p>
+          Diese Seite ist nur für Administratoren verfügbar.
+        </p>
+      </div>
+    </main>
+  );
+}
   const [employees, setEmployees] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
