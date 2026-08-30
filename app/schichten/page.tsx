@@ -88,6 +88,35 @@ export default function Schichten() {
   }
 
   async function add() {
+
+const selectedDate = new Date(date);
+const weekday = selectedDate.getDay();
+
+const selectedBranch = branches.find(
+  (b) => b.id === branch
+);
+    
+if (
+  selectedBranch?.name === "Stemwede" &&
+  (weekday === 0 || weekday === 6)
+) {
+  setMsg(
+    "❌ In Stemwede können am Wochenende keine Schichten geplant werden."
+  );
+  return;
+}
+    
+if (
+  selectedBranch?.name === "Hunteburg" &&
+  (weekday === 0 || weekday === 6) &&
+  shiftType === "Spät"
+) {
+  setMsg(
+    "❌ In Hunteburg gibt es am Wochenende keine Nachmittagsschicht."
+  );
+  return;
+}
+    
     const startTime =
       shiftType === "Früh"
         ? "08:00"
