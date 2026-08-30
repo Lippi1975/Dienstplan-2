@@ -25,6 +25,7 @@ export default function Plan() {
   const [employee, setEmployee] = useState(0);
   const [shiftType, setShiftType] = useState("Früh");
   const [holidays, setHolidays] = useState<any[]>([]);
+  const [templates, setTemplates] = useState<any[]>([]);
   const [date, setDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
@@ -75,8 +76,10 @@ if (employeeData) {
 await loadShifts();
 await loadVacations();
 await loadHolidays();
+await loadTemplates();
 }
 
+  
   async function loadHolidays() {
   const { data } = await createClient()
     .from("holidays")
@@ -86,6 +89,21 @@ await loadHolidays();
     setHolidays(data);
   }
 }
+
+  async function loadTemplates() {
+  const { data } = await createClient()
+    .from("shift_templates")
+    .select(`
+      *,
+      employees(name),
+      branches(name)
+    `);
+
+  if (data) {
+    setTemplates(data);
+  }
+}
+
   
 async function loadVacations() {
   const { data } = await createClient()
@@ -264,6 +282,25 @@ function getShift(
       s.shift_date === date &&
       s.branches?.name === branchName &&
       s.shift_type === shiftType
+  );
+}
+  function getTemplate(
+  date: string,
+  branchName: string,
+  shiftType: string
+) {
+  const weekday =
+    new Date(date).getDay();
+
+  return templates.find(
+    (t) =>
+      t.branches?.name === branchName &&
+      t.shift_type === shiftType &&
+      t.weekday === weekday &&
+      (!t.valid_from ||
+        date >= t.valid_from) &&
+      (!t.valid_until ||
+        date <= t.valid_until)
   );
 }
 function getCalendarWeek(date: Date) {
@@ -524,8 +561,13 @@ if (holiday) {
     branch1,
     "Früh"
   );
+  const template = getTemplate(
+  day,
+  branch1,
+  "Früh"
+);
 
-  if (!shift) {
+  if (!shift && !template) {
 return (
   <div
     className="shift"
@@ -615,8 +657,13 @@ if (holiday) {
     branch1,
     "Spät"
   );
+  const template = getTemplate(
+  day,
+  branch1,
+  "Früh"
+);
 
-if (!shift) {
+if (!shift && !template) {
   return (
     <div
       className="shift"
@@ -713,8 +760,13 @@ if (holiday) {
     branch2,
     "Früh"
   );
+  const template = getTemplate(
+  day,
+  branch1,
+  "Früh"
+);
 
-if (!shift) {
+if (!shift && !template) {
   return (
     <div
       className="shift"
@@ -803,8 +855,13 @@ if (holiday) {
     branch2,
     "Spät"
   );
+  const template = getTemplate(
+  day,
+  branch1,
+  "Früh"
+);
 
-if (!shift) {
+if (!shift && !template) {
   return (
     <div
       className="shift"
