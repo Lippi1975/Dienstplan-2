@@ -11,6 +11,8 @@ export default function Serien() {
   const [weekday, setWeekday] = useState("5");
   const [shiftType, setShiftType] = useState("Früh");
   const [msg, setMsg] = useState("");
+  const [validFrom, setValidFrom] = useState("");
+  const [validUntil, setValidUntil] = useState("");
 
   useEffect(() => {
     loadEmployees();
@@ -45,6 +47,8 @@ export default function Serien() {
         weekday: Number(weekday),
         shift_type: shiftType,
         active: true,
+        valid_from: validFrom,
+        valid_until: validUntil,
       });
 
     setMsg(
@@ -148,6 +152,26 @@ export default function Serien() {
     Nachmittag
   </option>
 </select>
+
+<label>Gültig von</label>
+
+<input
+  type="date"
+  value={validFrom}
+  onChange={(e) =>
+    setValidFrom(e.target.value)
+  }
+/>
+
+<label>Gültig bis</label>
+
+<input
+  type="date"
+  value={validUntil}
+  onChange={(e) =>
+    setValidUntil(e.target.value)
+  }
+/>
 
 <div style={{ marginTop: 20 }}>
   <button
