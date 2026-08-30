@@ -51,7 +51,6 @@ async function loadVacations() {
 
   if (data) setVacations(data);
 }
-``
 
 async function saveVacation() {
 
@@ -107,16 +106,19 @@ async function saveVacation() {
         <h1>Urlaub verwalten</h1>
 
         <label>Mitarbeiter</label>
-<select
-  value={employeeId}
-  onChange={(e) =>
-    setEmployeeId(e.target.value)
-  }
->
+
+{currentEmployee?.role === "admin" ? (
+
+  <select
+    value={employeeId}
     onChange={(e) =>
-      setEmployee(Number(e.target.value))
+      setEmployeeId(e.target.value)
     }
   >
+    <option value="">
+      Bitte wählen
+    </option>
+
     {employees.map((emp) => (
       <option
         key={emp.id}
@@ -140,6 +142,7 @@ async function saveVacation() {
   </div>
 
 )}
+
          
         <label>Von</label>
         <input
