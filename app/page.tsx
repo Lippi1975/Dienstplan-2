@@ -26,8 +26,10 @@ export default function Home(){
            <Link href="/schichten">Schichten
           </Link>
 
+          {currentEmployee?.role === "admin" && (
            <Link href="/serien">Serien
           </Link>
+          )}
           
           <Link href="/urlaub">Urlaub
           </Link>
