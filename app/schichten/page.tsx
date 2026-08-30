@@ -31,6 +31,14 @@ export default function Schichten() {
   const [msg, setMsg] = useState("");
   const [holidays, setHolidays] = useState<any[]>([]);
   const [vacations, setVacations] = useState<any[]>([]);
+  
+  const currentEmployee =
+  typeof window !== "undefined"
+    ? JSON.parse(
+        localStorage.getItem("employee") ||
+        "null"
+      )
+    : null;
 
   useEffect(() => {
     loadData();
@@ -243,6 +251,17 @@ if (holiday) {
       
       <div className="card">
         <h1>Schichten verwalten</h1>
+        <p>
+  Angemeldet:
+  {" "}
+  {currentEmployee?.name}
+</p>
+
+<p>
+  Rolle:
+  {" "}
+  {currentEmployee?.role}
+</p>
 
         <div className="toolbar">
 
