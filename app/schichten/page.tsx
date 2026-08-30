@@ -120,10 +120,6 @@ export default function Schichten() {
   }
 
   async function add() {
-const employeeToSave =
-  currentEmployee?.role === "admin"
-    ? employee
-    : currentEmployee.id;
 
 const selectedDate = new Date(date);
 const weekday = selectedDate.getDay();
