@@ -120,6 +120,10 @@ export default function Schichten() {
   }
 
   async function add() {
+const employeeToSave =
+  currentEmployee?.role === "admin"
+    ? employee
+    : currentEmployee.id;
 
 const selectedDate = new Date(date);
 const weekday = selectedDate.getDay();
@@ -186,13 +190,18 @@ if (holiday) {
         ? "12:30"
         : "18:00";
 
+const employeeToSave =
+  currentEmployee?.role === "admin"
+    ? employee
+    : currentEmployee.id;
+    
     const { error } = await createClient()
       .from("shifts")
       .upsert(
         {
           shift_date: date,
           branch_id: branch,
-          employee_id: employee,
+          employee_id: employeeToSave,
           shift_type: shiftType,
           start_time: startTime,
           end_time: endTime,
@@ -281,21 +290,38 @@ if (holiday) {
             ))}
           </select>
 
-          <select
-            value={employee}
-            onChange={(e) =>
-              setEmployee(Number(e.target.value))
-            }
-          >
-            {employees.map((emp) => (
-              <option
-                key={emp.id}
-                value={emp.id}
-              >
-                {emp.name}
-              </option>
-            ))}
-          </select>
+         {currentEmployee?.role === "admin" ? (
+
+  <select
+    value={employee}
+    onChange={(e) =>
+      setEmployee(Number(e.target.value))
+    }
+  >
+    {employees.map((emp) => (
+      <option
+        key={emp.id}
+        value={emp.id}
+      >
+        {emp.name}
+      </option>
+    ))}
+  </select>
+
+) : (
+
+  <div
+    style={{
+      padding: "8px 12px",
+      border: "1px solid #d1d5db",
+      borderRadius: 6,
+      background: "#f9fafb",
+    }}
+  >
+    {currentEmployee?.name}
+  </div>
+
+)}
 
           <select
             value={shiftType}
