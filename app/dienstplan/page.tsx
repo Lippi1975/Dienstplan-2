@@ -660,7 +660,7 @@ if (holiday) {
   const template = getTemplate(
   day,
   branch1,
-  "Früh"
+  "Spät"
 );
 
 if (!shift && !template) {
@@ -762,7 +762,7 @@ if (holiday) {
   );
   const template = getTemplate(
   day,
-  branch1,
+  branch2,
   "Früh"
 );
 
@@ -857,8 +857,8 @@ if (holiday) {
   );
   const template = getTemplate(
   day,
-  branch1,
-  "Früh"
+  branch2,
+  "Spät"
 );
 
 if (!shift && !template) {
