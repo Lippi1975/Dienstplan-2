@@ -1,58 +1,127 @@
-const [employees, setEmployees] = useState<any[]>([]);
-const [branches, setBranches] = useState<any[]>([]);
-const [templates, setTemplates] = useState<any[]>([]);
+"use client";
 
-const [employeeId, setEmployeeId] = useState("");
-const [branchId, setBranchId] = useState("");
-const [weekday, setWeekday] = useState("5");
-const [shiftType, setShiftType] = useState("Früh");
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase";
 
-async function loadEmployees() {
-  const { data } = await createClient()
-    .from("employees")
-    .select("id,name")
-    .eq("active", true)
-    .order("name");
+export default function Serien() {
+  const [employees, setEmployees] = useState<any[]>([]);
+  const [branches, setBranches] = useState<any[]>([]);
+  const [employeeId, setEmployeeId] = useState("");
+  const [branchId, setBranchId] = useState("");
+  const [weekday, setWeekday] = useState("5");
+  const [shiftType, setShiftType] = useState("Früh");
+  const [msg, setMsg] = useState("");
 
-  if (data) setEmployees(data);
-}
+  useEffect(() => {
+    loadEmployees();
+    loadBranches();
+  }, []);
 
-async function loadBranches() {
-  const { data } = await createClient()
-    .from("branches")
-    .select("id,name")
-    .order("name");
+  async function loadEmployees() {
+    const { data } = await createClient()
+      .from("employees")
+      .select("id,name")
+      .eq("active", true)
+      .order("name");
 
-  if (data) setBranches(data);
-}
-
-async function saveTemplate() {
-  const { error } = await createClient()
-    .from("shift_templates")
-    .insert({
-      employee_id: employeeId,
-      branch_id: branchId,
-      weekday: Number(weekday),
-      shift_type: shiftType,
-      active: true,
-    });
-
-  if (!error) {
-    loadTemplates();
+    if (data) setEmployees(data);
   }
-}
 
-<select
-  value={weekday}
-  onChange={(e) =>
-    setWeekday(e.target.value)
+  async function loadBranches() {
+    const { data } = await createClient()
+      .from("branches")
+      .select("id,name")
+      .order("name");
+
+    if (data) setBranches(data);
   }
->
-  <option value="1">Montag</option>
-  <option value="2">Dienstag</option>
-  <option value="3">Mittwoch</option>
-  <option value="4">Donnerstag</option>
-  <option value="5">Freitag</option>
-  <option value="6">Samstag</option>
-  <option value="0">Sonntag</option>
-</select>
+
+  async function saveTemplate() {
+    const { error } = await createClient()
+      .from("shift_templates")
+      .insert({
+        employee_id: Number(employeeId),
+        branch_id: Number(branchId),
+        weekday: Number(weekday),
+        shift_type: shiftType,
+        active: true,
+      });
+
+    setMsg(
+      error
+        ? error.message
+        : "Serienschicht gespeichert"
+    );
+  }
+
+  return (
+    <main className="container">
+
+      <a
+        href="https://dienstplan-2.vercel.app/"
+        style={{
+          textDecoration: "none",
+        }}
+      >
+        <button>
+          ← Hauptmenü
+        </button>
+      </a>
+
+      <div className="card">
+        <h1>Serienschichten</h1>
+
+        <label>Mitarbeiter</label>
+
+        <select
+          value={employeeId}
+          onChange={(e) =>
+            setEmployeeId(e.target.value)
+          }
+        >
+          <option value="">
+            Bitte wählen
+          </option>
+
+          {employees.map((emp) => (
+            <option
+              key={emp.id}
+              value={emp.id}
+            >
+              {emp.name}
+            </option>
+          ))}
+        </select>
+
+        <label>Filiale</label>
+
+        <select
+          value={branchId}
+          onChange={(e) =>
+            setBranchId(e.target.value)
+          }
+        >
+          <option value="">
+            Bitte wählen
+          </option>
+
+          {branches.map((b) => (
+            <option
+              key={b.id}
+              value={b.id}
+            >
+              {b.name}
+            </option>
+          ))}
+        </select>
+
+        <label>Wochentag</label>
+
+        <select
+          value={weekday}
+          onChange={(e) =>
+            setWeekday(e.target.value)
+          }
+        >
+          <option value="1">Montag</option>
+        
