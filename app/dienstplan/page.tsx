@@ -496,7 +496,6 @@ const branch2 =
           </div>
 
 {(() => {
-  {(() => {
 
   const weekday = new Date(day).getDay();
 
