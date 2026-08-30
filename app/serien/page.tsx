@@ -51,6 +51,19 @@ async function loadTemplates() {
   }
 }
   async function saveTemplate() {
+    const overlap = templates.find(
+  (t) =>
+    t.branch_id === Number(branchId) &&
+    t.weekday === Number(weekday) &&
+    t.shift_type === shiftType
+);
+
+if (overlap) {
+  setMsg(
+    "❌ Für diese Filiale, diesen Wochentag und diese Schicht existiert bereits eine Serie."
+  );
+  return;
+}
     const { error } = await createClient()
       .from("shift_templates")
       .insert({
