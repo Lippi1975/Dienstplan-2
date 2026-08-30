@@ -25,6 +25,9 @@ export default function Home(){
 
            <Link href="/schichten">Schichten
           </Link>
+
+           <Link href="/serien">Serien
+          </Link>
           
           <Link href="/urlaub">Urlaub
           </Link>
