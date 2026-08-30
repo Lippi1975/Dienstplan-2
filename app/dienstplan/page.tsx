@@ -303,6 +303,15 @@ function getShift(
         date <= t.valid_until)
   );
 }
+
+function employeeName(
+  employeeId: number
+) {
+  return employees.find(
+    (e) => e.id === employeeId
+  )?.name;
+}
+  
 function getCalendarWeek(date: Date) {
   const target = new Date(date);
 
@@ -602,8 +611,19 @@ const vacation = employeeHasVacation(
       }}
     >
       {vacation
-        ? `🟨 Urlaub: ${shift.employees?.name}`
-        : shift.employees?.name}
+        ? `🟨 Urlaub: ${
+  shift
+    ? shift.employees?.name
+    : employeeName(
+        template.employee_id
+      )
+}`
+        : shift
+  ? shift.employees?.name
+  : employeeName(
+      template.employee_id
+    )
+
     </div>
   );
 })()}
