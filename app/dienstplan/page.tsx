@@ -497,25 +497,7 @@ const branch2 =
 
 {(() => {
 
-  const weekday = new Date(day).getDay();
-
-  if (weekday === 6 || weekday === 0) {
-    return (
-      <div
-        className="shift"
-        style={{
-          background: "#f3f4f6",
-          color: "#6b7280",
-          border: "1px solid #d1d5db",
-          fontWeight: "bold",
-        }}
-      >
-        🚫 Geschlossen
-      </div>
-    );
-  }
-
-  const holiday = isHoliday(
+   const holiday = isHoliday(
   day,
   branch1State
 );
@@ -586,9 +568,26 @@ return (
             {branch1} Nachmittag
           </div>
 
-    
-
 {(() => {
+
+  const weekday = new Date(day).getDay();
+
+  if (weekday === 6 || weekday === 0) {
+    return (
+      <div
+        className="shift"
+        style={{
+          background: "#f3f4f6",
+          color: "#6b7280",
+          border: "1px solid #d1d5db",
+          fontWeight: "bold",
+        }}
+      >
+        🚫 Geschlossen
+      </div>
+    );
+  }
+  
   const holiday = isHoliday(
   day,
   branch1State
