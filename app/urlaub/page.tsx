@@ -144,19 +144,25 @@ async function saveVacation() {
 )}
 
          
-        <label>Von</label>
-        <input
-          type="date"
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
-        />
+        <div style={{ marginTop: 12 }}>
+  <label>Von</label>
 
-        <label>Bis</label>
-        <input
-          type="date"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-        />
+  <input
+    type="date"
+    value={from}
+    onChange={(e) => setFrom(e.target.value)}
+  />
+</div>
+
+<div style={{ marginTop: 12 }}>
+  <label>Bis</label>
+
+  <input
+    type="date"
+    value={to}
+    onChange={(e) => setTo(e.target.value)}
+  />
+</div>
 
         <div style={{ marginTop: 16 }}>
           <button className="primary" onClick={saveVacation}>
