@@ -40,17 +40,18 @@ export default function Serien() {
     if (data) setBranches(data);
   }
 
-  async function loadTemplates() {
-const { data, error } = await createClient()
-  .from("shift_templates")
-  .select("*")
-  .order("weekday");
+async function loadTemplates() {
+  const { data } = await createClient()
+    .from("shift_templates")
+    .select(`
+      *,
+      employees(name),
+      branches(name)
+    `)
+    .order("weekday");
 
-console.log(data);
-console.log(error);
-
-if (data) {
-  setTemplates(data);
+  if (data) {
+    setTemplates(data);
   }
 }
   async function saveTemplate() {
