@@ -52,7 +52,6 @@ console.log(error);
 if (data) {
   setTemplates(data);
 }
-}
 
   async function saveTemplate() {
     const { error } = await createClient()
