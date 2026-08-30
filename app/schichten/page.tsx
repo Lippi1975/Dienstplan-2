@@ -30,12 +30,14 @@ export default function Schichten() {
 
   const [msg, setMsg] = useState("");
   const [holidays, setHolidays] = useState<any[]>([]);
+  const [vacations, setVacations] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   async function loadData() {
+    await loadVacations();
     await loadHolidays();
     const supabase = createClient();
 
@@ -78,6 +80,15 @@ export default function Schichten() {
     setHolidays(data);
   }
 }
+  async function loadVacations() {
+  const { data } = await createClient()
+    .from("vacations")
+    .select("*");
+
+  if (data) {
+    setVacations(data);
+  }
+}
       
   async function loadShifts() {
     const { data } = await createClient()
@@ -108,6 +119,20 @@ const weekday = selectedDate.getDay();
 const selectedBranch = branches.find(
   (b) => b.id === branch
 );
+
+const vacation = vacations.find(
+  (v) =>
+    v.employee_id === employee &&
+    date >= v.date_from &&
+    date <= v.date_to
+);
+
+if (vacation) {
+  setMsg(
+    "❌ Dieser Mitarbeiter hat an diesem Tag Urlaub."
+  );
+  return;
+}
     
 if (
   selectedBranch?.name === "Stemwede" &&
