@@ -284,11 +284,31 @@ function getShift(
       s.shift_type === shiftType
   );
 }
-  function getTemplate(
+function getTemplate(
   date: string,
   branchName: string,
   shiftType: string
 ) {
+  const weekday =
+    new Date(date).getDay();
+
+  const branchId =
+    branches.find(
+      (b) => b.name === branchName
+    )?.id;
+
+  return templates.find(
+    (t) =>
+      t.branch_id === branchId &&
+      t.shift_type === shiftType &&
+      t.weekday === weekday &&
+      (!t.valid_from ||
+        date >= t.valid_from) &&
+      (!t.valid_until ||
+        date <= t.valid_until)
+  );
+}
+  {
   const weekday =
     new Date(date).getDay();
 
