@@ -124,4 +124,43 @@ export default function Serien() {
           }
         >
           <option value="1">Montag</option>
-        
+          <option value="2">Dienstag</option>
+          <option value="3">Mittwoch</option>
+          <option value="4">Donnerstag</option>
+          <option value="5">Freitag</option>
+          <option value="6">Samstag</option>
+          <option value="0">Sonntag</option>
+</select>
+
+<label>Schicht</label>
+
+<select
+  value={shiftType}
+  onChange={(e) =>
+    setShiftType(e.target.value)
+  }
+>
+  <option value="Früh">
+    Vormittag
+  </option>
+
+  <option value="Spät">
+    Nachmittag
+  </option>
+</select>
+
+<div style={{ marginTop: 20 }}>
+  <button
+    className="primary"
+    onClick={saveTemplate}
+  >
+    Serie speichern
+  </button>
+</div>
+
+<p>{msg}</p>
+
+      </div>
+    </main>
+  );
+}
