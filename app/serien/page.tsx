@@ -13,10 +13,12 @@ export default function Serien() {
   const [msg, setMsg] = useState("");
   const [validFrom, setValidFrom] = useState("");
   const [validUntil, setValidUntil] = useState("");
+  const [templates, setTemplates] = useState<any[]>([]);
 
   useEffect(() => {
     loadEmployees();
     loadBranches();
+    loadTemplates();
   }, []);
 
   async function loadEmployees() {
@@ -38,6 +40,21 @@ export default function Serien() {
     if (data) setBranches(data);
   }
 
+  async function loadTemplates() {
+  const { data } = await createClient()
+    .from("shift_templates")
+    .select(`
+      *,
+      employees(name),
+      branches(name)
+    `)
+    .order("weekday");
+
+  if (data) {
+    setTemplates(data);
+  }
+}
+
   async function saveTemplate() {
     const { error } = await createClient()
       .from("shift_templates")
@@ -56,6 +73,9 @@ export default function Serien() {
         ? error.message
         : "Serienschicht gespeichert"
     );
+    if (!error) {
+      loadTemplates();
+    }
   }
 
   return (
