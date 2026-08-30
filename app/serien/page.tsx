@@ -43,11 +43,7 @@ export default function Serien() {
 async function loadTemplates() {
   const { data } = await createClient()
     .from("shift_templates")
-    .select(`
-      *,
-      employees(name),
-      branches(name)
-    `)
+    .select("*")
     .order("weekday");
 
   if (data) {
@@ -110,6 +106,21 @@ function weekdayName(
       return "";
   }
 }  
+  function employeeName(id: number) {
+  return (
+    employees.find(
+      (e) => e.id === id
+    )?.name || `#${id}`
+  );
+}
+
+function branchName(id: number) {
+  return (
+    branches.find(
+      (b) => b.id === id
+    )?.name || `#${id}`
+  );
+}
 
   return (
     <main className="container">
@@ -247,11 +258,11 @@ function weekdayName(
     className="card"
   >
     <strong>
-      {t.employees?.name}
+      {employeeName(t.employee_id)}
     </strong>
 
     <div>
-      Filiale: {t.branches?.name}
+      Filiale: {branchName(t.branch_id)}
     </div>
 
     <div>
