@@ -432,33 +432,48 @@ if (holiday) {
   }
 </div>
 
-            <select
-              value={s.employee_id}
-              onChange={(e) =>
-                updateEmployee(
-                  s.id,
-                  Number(e.target.value)
-                )
-              }
-            >
-              {employees.map((emp) => (
-                <option
-                  key={emp.id}
-                  value={emp.id}
-                >
-                  {emp.name}
-                </option>
-              ))}
-            </select>
+{currentEmployee?.role === "admin" ? (
+
+  <select
+    value={s.employee_id}
+    onChange={(e) =>
+      updateEmployee(
+        s.id,
+        Number(e.target.value)
+      )
+    }
+  >
+    {employees.map((emp) => (
+      <option
+        key={emp.id}
+        value={emp.id}
+      >
+        {emp.name}
+      </option>
+    ))}
+  </select>
+
+) : (
+
+  <div>
+    {s.employees?.name}
+  </div>
+
+)}
 
             <div style={{ marginTop: 10 }}>
-              <button
-                onClick={() =>
-                  deleteShift(s.id)
-                }
-              >
-                Löschen
-              </button>
+{(
+  currentEmployee?.role === "admin" ||
+  currentEmployee?.id === s.employee_id
+) && (
+  <button
+    onClick={() =>
+      deleteShift(s.id)
+    }
+  >
+    Löschen
+  </button>
+)}
             </div>
           </div>
         ))}
