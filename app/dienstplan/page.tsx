@@ -723,7 +723,6 @@ if (!shift && !template) {
   );
 }
 
-  const vacation = employeeHasVacation(
 const employeeId =
   shift?.employee_id ??
   template?.employee_id;
@@ -845,7 +844,6 @@ if (!shift && !template) {
   );
 }
 
-  const vacation = employeeHasVacation(
 const employeeId =
   shift?.employee_id ??
   template?.employee_id;
@@ -960,7 +958,6 @@ if (!shift && !template) {
   );
 }
 
-  const vacation = employeeHasVacation(
 const employeeId =
   shift?.employee_id ??
   template?.employee_id;
