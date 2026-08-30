@@ -610,13 +610,20 @@ const vacation = employeeHasVacation(
           : undefined,
       }}
     >
-      {vacation
-        ? `🟨 Urlaub: ${
-  shift
+{vacation
+  ? `🟨 Urlaub: ${
+      shift
+        ? shift.employees?.name
+        : employeeName(
+            template.employee_id
+          )
+    }`
+  : shift
     ? shift.employees?.name
-    : employeeName(
+    : `🔁 ${employeeName(
         template.employee_id
-      )
+      )}`
+  }
 }`
         : shift
   ? shift.employees?.name
@@ -716,9 +723,20 @@ if (!shift && !template) {
         background: vacation ? "#fff3cd" : undefined,
       }}
     >
-      {vacation
-        ? `🟨 Urlaub: ${shift.employees?.name}`
-        : shift.employees?.name}
+{vacation
+  ? `🟨 Urlaub: ${
+      shift
+        ? shift.employees?.name
+        : employeeName(
+            template.employee_id
+          )
+    }`
+  : shift
+    ? shift.employees?.name
+    : `🔁 ${employeeName(
+        template.employee_id
+      )}`
+}
     </div>
   );
 })()}
@@ -818,9 +836,20 @@ if (!shift && !template) {
         background: vacation ? "#fff3cd" : undefined,
       }}
     >
-      {vacation
-        ? `🟨 Urlaub: ${shift.employees?.name}`
-        : shift.employees?.name}
+{vacation
+  ? `🟨 Urlaub: ${
+      shift
+        ? shift.employees?.name
+        : employeeName(
+            template.employee_id
+          )
+    }`
+  : shift
+    ? shift.employees?.name
+    : `🔁 ${employeeName(
+        template.employee_id
+      )}`
+}
     </div>
   );
 })()}
@@ -913,9 +942,20 @@ if (!shift && !template) {
         background: vacation ? "#fff3cd" : undefined,
       }}
     >
-      {vacation
-        ? `🟨 Urlaub: ${shift.employees?.name}`
-        : shift.employees?.name}
+{vacation
+  ? `🟨 Urlaub: ${
+      shift
+        ? shift.employees?.name
+        : employeeName(
+            template.employee_id
+          )
+    }`
+  : shift
+    ? shift.employees?.name
+    : `🔁 ${employeeName(
+        template.employee_id
+      )}`
+}
     </div>
   );
 })()}
