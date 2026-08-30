@@ -28,12 +28,14 @@ export default function Schichten() {
   );
 
   const [msg, setMsg] = useState("");
+  const [holidays, setHolidays] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
   }, []);
 
   async function loadData() {
+    await loadHolidays();
     const supabase = createClient();
 
     const { data: branchData } = await supabase
@@ -67,6 +69,17 @@ export default function Schichten() {
   }
 
   async function loadShifts() {
+
+    async function loadHolidays() {
+  const { data } = await createClient()
+    .from("holidays")
+    .select("*");
+
+  if (data) {
+    setHolidays*data);
+  }
+}
+    
     const { data } = await createClient()
       .from("shifts")
       .select(`
