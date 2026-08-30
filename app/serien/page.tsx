@@ -169,7 +169,7 @@ function branchName(id: number) {
         </button>
       </a>
 
-      <div className="card from-card">
+      <div className="card form-card">
         <h1>Serienschichten</h1>
 
         <div className="form-group">
