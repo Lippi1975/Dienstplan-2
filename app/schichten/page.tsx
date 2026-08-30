@@ -116,6 +116,19 @@ if (
   );
   return;
 }
+
+    const holiday = holidays.find(
+  (h) =>
+    h.holiday_date === date &&
+    h.state === selectedBranch?.state
+);
+
+if (holiday) {
+  setMsg(
+    `❌ ${holiday.holiday_name}: An Feiertagen werden keine Schichten geplant.`
+  );
+  return;
+}
     
     const startTime =
       shiftType === "Früh"
