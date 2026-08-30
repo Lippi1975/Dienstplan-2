@@ -44,9 +44,13 @@ export default function Schichten() {
       .select("id,name,state")
       .order("id");
 
+    const { data: branchData } = await supabase
+  .from("branches")
+  .select("id,name,state")
+
     const { data: employeeData } = await supabase
       .from("employees")
-      .select("id,name,state")
+      .select("id,name")
       .eq("active", true)
       .order("name");
 
