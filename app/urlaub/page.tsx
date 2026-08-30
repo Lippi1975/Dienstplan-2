@@ -5,7 +5,13 @@ import { createClient } from "@/lib/supabase";
 
 export default function Urlaub() {
   const supabase = createClient();
-
+  const currentEmployee =
+    typeof window !== "undefined"
+    ? JSON.parse(
+        localStorage.getItem("employee") ||
+        "null"
+      )
+    : null;
   const [employees, setEmployees] = useState<any[]>([]);
   const [vacations, setVacations] = useState<any[]>([]);
   const [employeeId, setEmployeeId] = useState("");
@@ -47,20 +53,32 @@ async function loadVacations() {
 }
 ``
 
-  async function saveVacation() {
-    const { error } = await supabase.from("vacations").insert({
-      employee_id: employeeId,
+async function saveVacation() {
+
+  const employeeToSave =
+    currentEmployee?.role === "admin"
+      ? employeeId
+      : currentEmployee.id;
+
+  const { error } = await supabase
+    .from("vacations")
+    .insert({
+      employee_id: employeeToSave,
       date_from: from,
       date_to: to,
       status: "genehmigt",
     });
 
-    setMsg(error ? error.message : "Urlaub gespeichert");
+  setMsg(
+    error
+      ? error.message
+      : "Urlaub gespeichert"
+  );
 
-    if (!error) {
-      loadVacations();
-    }
+  if (!error) {
+    loadVacations();
   }
+}
 
   async function deleteVacation(id: number) {
     await supabase
@@ -89,19 +107,40 @@ async function loadVacations() {
         <h1>Urlaub verwalten</h1>
 
         <label>Mitarbeiter</label>
-        <select
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-        >
-          <option value="">Bitte wählen</option>
+<select
+  value={employeeId}
+  onChange={(e) =>
+    setEmployeeId(e.target.value)
+  }
+>
+    onChange={(e) =>
+      setEmployee(Number(e.target.value))
+    }
+  >
+    {employees.map((emp) => (
+      <option
+        key={emp.id}
+        value={emp.id}
+      >
+        {emp.name}
+      </option>
+    ))}
+  </select>
 
-          {employees.map((emp) => (
-            <option key={emp.id} value={emp.id}>
-              {emp.name}
-            </option>
-          ))}
-        </select>
+) : (
 
+  <div
+    style={{
+      padding: "8px",
+      border: "1px solid #ccc",
+      borderRadius: "6px",
+    }}
+  >
+    {currentEmployee?.name}
+  </div>
+
+)}
+         
         <label>Von</label>
         <input
           type="date"
@@ -140,9 +179,16 @@ async function loadVacations() {
     : `${new Date(v.date_from).toLocaleDateString("de-DE")} bis ${new Date(v.date_to).toLocaleDateString("de-DE")}`}
 </div>
 
-            <button onClick={() => deleteVacation(v.id)}>
-              Löschen
-            </button>
+            {(
+  currentEmployee?.role === "admin" ||
+  currentEmployee?.id === v.employee_id
+) && (
+  <button
+    onClick={() => deleteVacation(v.id)}
+  >
+    Löschen
+  </button>
+)}
           </div>
         ))}
       </div>
