@@ -194,6 +194,7 @@ function branchName(id: number) {
             </option>
           ))}
         </select>
+          </div>
 
         <div className="form-group">
         <label>Filiale</label>
@@ -217,6 +218,7 @@ function branchName(id: number) {
             </option>
           ))}
         </select>
+          </div>
 
         <div className="form-group">
         <label>Wochentag</label>
@@ -234,7 +236,8 @@ function branchName(id: number) {
           <option value="5">Freitag</option>
           <option value="6">Samstag</option>
           <option value="0">Sonntag</option>
-</select>
+      </select>
+          </div>
 
           <div className="form-group">
           <label>Schicht</label>
@@ -253,6 +256,7 @@ function branchName(id: number) {
     Nachmittag
   </option>
 </select>
+  </div>
 
             <div className="form-group">
             <label>Gültig von</label>
@@ -264,6 +268,7 @@ function branchName(id: number) {
     setValidFrom(e.target.value)
   }
 />
+              </div>
 
           <div className="form-group">
           <label>Gültig bis</label>
@@ -275,6 +280,7 @@ function branchName(id: number) {
     setValidUntil(e.target.value)
   }
 />
+            </div>
 
 <div style={{ marginTop: 20 }}>
   <button
