@@ -297,31 +297,9 @@ function getTemplate(
       (b) => b.name === branchName
     )?.id;
 
-console.log("Templates", templates);
-console.log("Suche", {
-  date,
-  branchName,
-  shiftType,
-});
-  
   return templates.find(
     (t) =>
       t.branch_id === branchId &&
-      t.shift_type === shiftType &&
-      t.weekday === weekday &&
-      (!t.valid_from ||
-        date >= t.valid_from) &&
-      (!t.valid_until ||
-        date <= t.valid_until)
-  );
-}
-  {
-  const weekday =
-    new Date(date).getDay();
-
-  return templates.find(
-    (t) =>
-      t.branches?.name === branchName &&
       t.shift_type === shiftType &&
       t.weekday === weekday &&
       (!t.valid_from ||
