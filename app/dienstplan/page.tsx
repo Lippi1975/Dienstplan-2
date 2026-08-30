@@ -604,11 +604,13 @@ const vacation = employeeHasVacation(
   return (
     <div
       className="shift"
-      style={{
-        background: vacation
-          ? "#fff3cd"
-          : undefined,
-      }}
+style={{
+  background: vacation
+    ? "#fff3cd"
+    : !shift && template
+      ? "#dcfce7"
+      : undefined,
+}}
     >
 {vacation
   ? `🟨 Urlaub: ${
@@ -624,12 +626,6 @@ const vacation = employeeHasVacation(
         template.employee_id
       )}`
   }
-}`
-        : shift
-  ? shift.employees?.name
-  : employeeName(
-      template.employee_id
-    )
 
     </div>
   );
@@ -719,9 +715,13 @@ if (!shift && !template) {
   return (
     <div
       className="shift"
-      style={{
-        background: vacation ? "#fff3cd" : undefined,
-      }}
+style={{
+  background: vacation
+    ? "#fff3cd"
+    : !shift && template
+      ? "#dcfce7"
+      : undefined,
+}}
     >
 {vacation
   ? `🟨 Urlaub: ${
@@ -832,9 +832,13 @@ if (!shift && !template) {
   return (
     <div
       className="shift"
-      style={{
-        background: vacation ? "#fff3cd" : undefined,
-      }}
+style={{
+  background: vacation
+    ? "#fff3cd"
+    : !shift && template
+      ? "#dcfce7"
+      : undefined,
+}}
     >
 {vacation
   ? `🟨 Urlaub: ${
@@ -938,9 +942,13 @@ if (!shift && !template) {
   return (
     <div
       className="shift"
-      style={{
-        background: vacation ? "#fff3cd" : undefined,
-      }}
+style={{
+  background: vacation
+    ? "#fff3cd"
+    : !shift && template
+      ? "#dcfce7"
+      : undefined,
+}}
     >
 {vacation
   ? `🟨 Urlaub: ${
