@@ -21,6 +21,33 @@ body {
   padding: 15px;
 }
 
+.form-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 10px;
+}
+
 .card {
   background: white;
   border-radius: 14px;
