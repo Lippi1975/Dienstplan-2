@@ -297,6 +297,13 @@ function getTemplate(
       (b) => b.name === branchName
     )?.id;
 
+console.log("Templates", templates);
+console.log("Suche", {
+  date,
+  branchName,
+  shiftType,
+});
+  
   return templates.find(
     (t) =>
       t.branch_id === branchId &&
@@ -594,6 +601,11 @@ if (holiday) {
   day,
   branch1,
   "Früh"
+);
+
+  console.log(
+  "Template gefunden:",
+  template
 );
 
   if (!shift && !template) {
