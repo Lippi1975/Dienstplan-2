@@ -142,12 +142,15 @@ if (vacation) {
   return;
 }
     
-if (
-  selectedBranch?.name === "Stemwede" &&
-  (weekday === 0 || weekday === 6)
-) {
-  setMsg(
-    "❌ In Stemwede können am Wochenende keine Schichten geplant werden."
+// STEMWEDE: 
+    // Samstagvormittag ist erlaubt. 
+    // Samstag Nachmittag und Sonntag sind geschlossen. 
+if ( selectedBranch?.name === "Stemwede" && 
+    ( weekday === 0 || (weekday === 6 && shiftType === "Spät") 
+    ) 
+   ) { 
+  setMsg( 
+    "❌ In Stemwede ist Samstag nur die Vormittagsschicht möglich."
   );
   return;
 }
