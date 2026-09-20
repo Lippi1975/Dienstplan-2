@@ -9,6 +9,7 @@ type Branch = {
   state: string;
 };
 
+
 type Employee = {
   id: number;
   name: string;
