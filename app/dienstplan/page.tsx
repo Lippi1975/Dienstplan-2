@@ -779,7 +779,7 @@ style={{
 
   const weekday = new Date(day).getDay();
 
-  if (weekday === 6 || weekday === 0) {
+  if (weekday === 0) {
     return (
       <div
         className="shift"
